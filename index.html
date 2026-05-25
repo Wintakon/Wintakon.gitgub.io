@@ -781,7 +781,8 @@ document.getElementById('editModal').addEventListener('click',e=>{if(e.target===
 
 function exportPDF(){
   const list=filtered();
-  const tabLabel={'all':'ทั้งหมด','y1-all':'ปี 1 ทั้งหมด','y1-four':'ปี 1 (4 ปี)','y1-transfer':'ปี 1 เทียบโอน','y2-all':'ปี 2 ทั้งหมด','y2-four':'ปี 2 (4 ปี)','y2-transfer':'ปี 2 เทียบโอน'}[tab]||'ทั้งหมด';
+  const tabLabel={'all':'ทั้งหมด','y1-all':'ปี1-ทั้งหมด','y1-four':'ปี1-4ปี','y1-transfer':'ปี1-เทียบโอน','y2-all':'ปี2-ทั้งหมด','y2-four':'ปี2-4ปี','y2-transfer':'ปี2-เทียบโอน'}[tab]||'ทั้งหมด';
+  const tabLabelTH={'all':'ทั้งหมด','y1-all':'ปี 1 ทั้งหมด','y1-four':'ปี 1 (4 ปี)','y1-transfer':'ปี 1 เทียบโอน','y2-all':'ปี 2 ทั้งหมด','y2-four':'ปี 2 (4 ปี)','y2-transfer':'ปี 2 เทียบโอน'}[tab]||'ทั้งหมด';
   let present=0,absent=0;
   list.forEach(s=>{const a=getAtt(s.id);if(a.status===true)present++;else if(a.status===false)absent++;});
   const rows=list.map((s,i)=>{
@@ -794,18 +795,26 @@ function exportPDF(){
     const yearLabel=s.year==='y2'?'ปี 2':'ปี 1';
     return `<tr style="border-bottom:1px solid #eee"><td style="padding:5px 8px;color:#888;font-size:12px">${i+1}</td><td style="padding:5px 8px;font-size:11px;font-family:monospace;color:#555">${s.id}</td><td style="padding:5px 8px;font-size:13px">${s.name}</td><td style="padding:5px 8px;font-size:11px;color:#666">${yearLabel} ${typeLabel}</td><td style="padding:5px 8px;font-size:13px;font-weight:600;color:${stColor}">${stTxt}</td><td style="padding:5px 8px;font-size:12px;color:#555">${reason}</td></tr>`;
   }).join('');
-  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>เช็คชื่อ ${currentDate}</title>
+  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>เช็คชื่อ ${currentDate} ${tabLabelTH}</title>
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet">
 <style>body{font-family:'Sarabun',sans-serif;margin:20px;font-size:14px}h2{font-size:17px;font-weight:700;margin:0 0 3px}.sub{font-size:12px;color:#666;margin:0 0 14px}.stats{display:flex;gap:10px;margin:0 0 14px}.sb{border:1px solid #ddd;border-radius:6px;padding:8px 14px;text-align:center}.sn{font-size:20px;font-weight:700}.sl{font-size:10px;color:#888;margin-top:2px}.green{color:#1D6B3A}.red{color:#9B2626}table{width:100%;border-collapse:collapse}th{padding:7px 8px;text-align:left;border-bottom:2px solid #222;font-size:11px;color:#555;text-transform:uppercase}td{font-size:13px}tr:nth-child(even){background:#f9f9f9}.footer{margin-top:14px;font-size:10px;color:#aaa;border-top:1px solid #eee;padding-top:8px}@media print{body{margin:10px}}</style>
 </head><body>
-<h2>รายชื่อเช็คชื่อ — ${tabLabel}</h2>
+<h2>รายชื่อเช็คชื่อ — ${tabLabelTH}</h2>
 <p class="sub">มหาวิทยาลัยราชภัฎอุดรธานี · วิศวกรรมศาสตรบัณฑิต · ${currentDate}</p>
 <div class="stats"><div class="sb"><div class="sn">${list.length}</div><div class="sl">ทั้งหมด</div></div><div class="sb"><div class="sn green">${present}</div><div class="sl">มา</div></div><div class="sb"><div class="sn red">${absent}</div><div class="sl">ไม่มา</div></div><div class="sb"><div class="sn">${list.length-present-absent}</div><div class="sl">ยังไม่เช็ค</div></div></div>
 <table><thead><tr><th>#</th><th>รหัส</th><th>ชื่อ-นามสกุล</th><th>ประเภท</th><th>สถานะ</th><th>เหตุผล</th></tr></thead><tbody>${rows}</tbody></table>
 <div class="footer">ออกโดยระบบเช็คชื่อ RUDI · ${new Date().toLocaleString('th-TH')}</div>
-<script>window.onload=()=>{window.print()}<\/script></body></html>`;
-  const w=window.open('','_blank');
-  if(w){w.document.write(html);w.document.close();}else alert('กรุณาอนุญาต popup');
+</body></html>`;
+  // ดาวน์โหลดเลยโดยไม่เปิดหน้า print
+  const dateSlug=currentDate.replace(/\//g,'-');
+  const filename=`เช็คชื่อ_${dateSlug}_${tabLabel}.html`;
+  const blob=new Blob([html],{type:'text/html;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download=filename;
+  document.body.appendChild(a);a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
 // Init
