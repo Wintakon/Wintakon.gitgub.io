@@ -2,343 +2,376 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#1A3A2A">
 <title>เช็คชื่อ — วิศวกรรม ราชภัฎอุดรธานี</title>
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #F4F1EC;
-  --surface: #FAFAF7;
-  --card: #FFFFFF;
-  --border: #DDD9D0;
-  --border-strong: #B5B0A5;
-  --text: #1A1915;
-  --text-2: #5A5750;
-  --text-3: #8A8780;
-  --accent: #1A3A2A;
-  --accent-light: #E8F0EB;
-  --present: #1D6B3A;
-  --present-bg: #E6F4EC;
-  --present-border: #A8D5B5;
-  --absent: #9B2626;
-  --absent-bg: #FBEDEC;
-  --absent-border: #E8AAAA;
-  --warn: #7A5800;
-  --warn-bg: #FDF4DC;
-  --mono: 'IBM Plex Mono', monospace;
-  --sans: 'Sarabun', sans-serif;
+  --bg:#F4F1EC;--surface:#FAFAF7;--card:#FFFFFF;--border:#DDD9D0;--border-strong:#B5B0A5;
+  --text:#1A1915;--text-2:#5A5750;--text-3:#8A8780;
+  --accent:#1A3A2A;--present:#1D6B3A;--present-bg:#E6F4EC;--present-border:#A8D5B5;
+  --absent:#9B2626;--absent-bg:#FBEDEC;--absent-border:#E8AAAA;
+  --mono:'IBM Plex Mono',monospace;--sans:'Sarabun',sans-serif;
+  --sidebar-w:270px;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: var(--sans); background: var(--bg); color: var(--text); min-height: 100vh; font-size: 15px; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh;font-size:15px}
 
-/* Layout */
-.page { display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
-.sidebar { background: var(--accent); color: #fff; padding: 0; position: sticky; top: 0; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; }
-.main { padding: 0; overflow: hidden; }
+/* ===== DESKTOP LAYOUT ===== */
+.page{display:grid;grid-template-columns:var(--sidebar-w) 1fr;min-height:100vh}
+.sidebar{background:var(--accent);color:#fff;position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column;z-index:50}
+.main{min-width:0;display:flex;flex-direction:column}
 
 /* Sidebar */
-.sidebar-header { padding: 28px 24px 20px; border-bottom: 1px solid rgba(255,255,255,.12); }
-.sidebar-logo { font-size: 11px; font-family: var(--mono); letter-spacing: .12em; color: rgba(255,255,255,.5); text-transform: uppercase; margin-bottom: 8px; }
-.sidebar-title { font-size: 17px; font-weight: 600; line-height: 1.3; }
-.sidebar-sub { font-size: 12px; color: rgba(255,255,255,.5); margin-top: 4px; }
+.sidebar-header{padding:22px 20px 16px;border-bottom:1px solid rgba(255,255,255,.12)}
+.sidebar-logo{font-size:10px;font-family:var(--mono);letter-spacing:.12em;color:rgba(255,255,255,.45);text-transform:uppercase;margin-bottom:6px}
+.sidebar-title{font-size:16px;font-weight:600;line-height:1.3}
+.sidebar-sub{font-size:11px;color:rgba(255,255,255,.45);margin-top:3px}
+.sidebar-section{padding:12px 12px 6px}
+.sidebar-label{font-size:10px;font-family:var(--mono);letter-spacing:.12em;color:rgba(255,255,255,.35);text-transform:uppercase;padding:0 8px;margin-bottom:5px}
+.tab-btn{display:flex;align-items:center;justify-content:space-between;width:100%;padding:8px 10px;border-radius:8px;border:none;background:transparent;color:rgba(255,255,255,.65);font-family:var(--sans);font-size:13px;cursor:pointer;text-align:left;transition:all .15s}
+.tab-btn:hover{background:rgba(255,255,255,.08);color:#fff}
+.tab-btn.active{background:rgba(255,255,255,.15);color:#fff;font-weight:500}
+.tab-pill{font-size:11px;font-family:var(--mono);background:rgba(255,255,255,.15);padding:2px 7px;border-radius:10px;flex-shrink:0}
+.date-section{padding:10px 12px;border-top:1px solid rgba(255,255,255,.1);margin-top:auto}
+.date-label{font-size:10px;font-family:var(--mono);letter-spacing:.1em;color:rgba(255,255,255,.35);text-transform:uppercase;margin-bottom:6px}
+.date-list{display:flex;flex-direction:column;gap:3px;max-height:150px;overflow-y:auto;margin-bottom:8px}
+.date-item{padding:6px 8px;border-radius:6px;font-size:12px;color:rgba(255,255,255,.6);cursor:pointer;border:1px solid transparent;display:flex;align-items:center;justify-content:space-between;transition:all .15s}
+.date-item:hover{background:rgba(255,255,255,.07);color:#fff}
+.date-item.active{background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.2)}
+.date-item-left{display:flex;align-items:center;gap:7px}
+.date-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;background:rgba(255,255,255,.25)}
+.date-dot.has-data{background:#7ECBA1}
+.date-del-btn{width:18px;height:18px;border-radius:4px;border:none;background:transparent;color:rgba(255,255,255,.25);cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;opacity:0}
+.date-item:hover .date-del-btn{opacity:1}
+.date-del-btn:hover{color:#F09595;background:rgba(255,255,255,.1)}
+.date-add-box{background:rgba(255,255,255,.07);border-radius:10px;padding:10px;border:1px solid rgba(255,255,255,.1)}
+.date-add-label{font-size:10px;font-family:var(--mono);letter-spacing:.1em;color:rgba(255,255,255,.35);text-transform:uppercase;margin-bottom:7px}
+.date-picker-input{width:100%;padding:6px 10px;border-radius:7px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);color:#fff;font-family:var(--sans);font-size:13px;outline:none;cursor:pointer}
+.date-picker-input::-webkit-calendar-picker-indicator{filter:invert(1);opacity:.6;cursor:pointer}
+.date-picker-input:focus{border-color:rgba(255,255,255,.4)}
+.date-add-row{display:flex;gap:6px;margin-top:7px}
+.sidebar-btn-sm{flex:1;padding:6px 4px;border-radius:7px;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.65);font-family:var(--sans);font-size:12px;cursor:pointer;transition:all .15s}
+.sidebar-btn-sm:hover{background:rgba(255,255,255,.1);color:#fff}
+.sidebar-btn-sm.today-btn{border-color:rgba(126,203,161,.4);color:#7ECBA1}
+.sidebar-btn-sm.today-btn:hover{background:rgba(126,203,161,.12)}
+.sidebar-btn-sm.confirm-btn{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.25)}
+.sidebar-btn-sm.confirm-btn:hover{background:rgba(255,255,255,.2)}
+.date-actions{padding:8px 12px 16px}
+.sidebar-btn{width:100%;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.7);font-family:var(--sans);font-size:12px;cursor:pointer;transition:all .15s}
+.sidebar-btn:hover{background:rgba(255,255,255,.1);color:#fff}
 
-.sidebar-section { padding: 16px 16px 8px; }
-.sidebar-label { font-size: 10px; font-family: var(--mono); letter-spacing: .12em; color: rgba(255,255,255,.4); text-transform: uppercase; padding: 0 8px; margin-bottom: 6px; }
-
-.tab-btn { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 9px 12px; border-radius: 8px; border: none; background: transparent; color: rgba(255,255,255,.7); font-family: var(--sans); font-size: 14px; cursor: pointer; text-align: left; transition: all .15s; }
-.tab-btn:hover { background: rgba(255,255,255,.08); color: #fff; }
-.tab-btn.active { background: rgba(255,255,255,.15); color: #fff; font-weight: 500; }
-.tab-pill { font-size: 11px; font-family: var(--mono); background: rgba(255,255,255,.15); padding: 2px 7px; border-radius: 10px; }
-
-.date-section { padding: 12px 16px; border-top: 1px solid rgba(255,255,255,.1); margin-top: auto; }
-.date-label { font-size: 10px; font-family: var(--mono); letter-spacing: .1em; color: rgba(255,255,255,.4); text-transform: uppercase; margin-bottom: 8px; }
-.date-list { display: flex; flex-direction: column; gap: 4px; max-height: 160px; overflow-y: auto; margin-bottom: 10px; }
-.date-item { padding: 7px 10px; border-radius: 6px; font-size: 13px; color: rgba(255,255,255,.65); cursor: pointer; border: 1px solid transparent; display: flex; align-items: center; justify-content: space-between; transition: all .15s; }
-.date-item:hover { background: rgba(255,255,255,.07); color: #fff; }
-.date-item.active { background: rgba(255,255,255,.14); color: #fff; border-color: rgba(255,255,255,.2); }
-.date-item-left { display: flex; align-items: center; gap: 8px; }
-.date-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; background: rgba(255,255,255,.3); }
-.date-dot.has-data { background: #7ECBA1; }
-.date-del-btn { width: 20px; height: 20px; border-radius: 4px; border: none; background: transparent; color: rgba(255,255,255,.3); cursor: pointer; font-size: 12px; display: flex; align-items: center; justify-content: center; transition: all .15s; flex-shrink: 0; opacity: 0; }
-.date-item:hover .date-del-btn { opacity: 1; }
-.date-del-btn:hover { color: #F09595; background: rgba(255,255,255,.1); }
-.date-add-box { background: rgba(255,255,255,.07); border-radius: 10px; padding: 12px; border: 1px solid rgba(255,255,255,.1); }
-.date-add-label { font-size: 10px; font-family: var(--mono); letter-spacing: .1em; color: rgba(255,255,255,.4); text-transform: uppercase; margin-bottom: 8px; }
-.date-picker-input { width: 100%; padding: 7px 10px; border-radius: 7px; border: 1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.1); color: #fff; font-family: var(--sans); font-size: 13px; outline: none; cursor: pointer; }
-.date-picker-input::-webkit-calendar-picker-indicator { filter: invert(1); opacity: .6; cursor: pointer; }
-.date-picker-input:focus { border-color: rgba(255,255,255,.4); background: rgba(255,255,255,.15); }
-.sidebar-btn-sm { flex: 1; padding: 7px 4px; border-radius: 7px; border: 1px solid rgba(255,255,255,.2); background: transparent; color: rgba(255,255,255,.7); font-family: var(--sans); font-size: 12px; cursor: pointer; transition: all .15s; }
-.sidebar-btn-sm:hover { background: rgba(255,255,255,.1); color: #fff; }
-.sidebar-btn-sm.today-btn { border-color: rgba(126,203,161,.4); color: #7ECBA1; }
-.sidebar-btn-sm.today-btn:hover { background: rgba(126,203,161,.12); }
-.sidebar-btn-sm.confirm-btn { background: rgba(255,255,255,.12); color: #fff; border-color: rgba(255,255,255,.25); }
-.sidebar-btn-sm.confirm-btn:hover { background: rgba(255,255,255,.2); }
-.date-actions { display: flex; gap: 6px; padding: 10px 16px 20px; }
-.sidebar-btn { flex: 1; padding: 8px 4px; border-radius: 8px; border: 1px solid rgba(255,255,255,.2); background: transparent; color: rgba(255,255,255,.75); font-family: var(--sans); font-size: 12px; cursor: pointer; transition: all .15s; }
-.sidebar-btn:hover { background: rgba(255,255,255,.1); color: #fff; }
+/* Topbar (mobile hamburger) */
+.topbar{display:none;background:var(--accent);color:#fff;padding:12px 16px;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:60}
+.topbar-title{font-size:15px;font-weight:600}
+.topbar-sub{font-size:11px;color:rgba(255,255,255,.5)}
+.hamburger{width:36px;height:36px;border-radius:8px;border:none;background:rgba(255,255,255,.12);color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:45}
+.sidebar-overlay.open{display:block}
 
 /* Main header */
-.main-header { background: var(--card); border-bottom: 1px solid var(--border); padding: 20px 28px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-.main-title { font-size: 20px; font-weight: 600; }
-.main-sub { font-size: 13px; color: var(--text-3); font-family: var(--mono); margin-top: 2px; }
-.header-actions { display: flex; gap: 8px; align-items: center; }
-.hbtn { padding: 8px 18px; border-radius: 8px; border: 1.5px solid var(--border); background: transparent; font-family: var(--sans); font-size: 13px; cursor: pointer; color: var(--text); transition: all .15s; font-weight: 500; }
-.hbtn:hover { border-color: var(--border-strong); background: var(--bg); }
-.hbtn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
-.hbtn.primary:hover { background: #0F2218; }
+.main-header{background:var(--card);border-bottom:1px solid var(--border);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.main-title{font-size:17px;font-weight:600}
+.main-sub{font-size:12px;color:var(--text-3);font-family:var(--mono);margin-top:2px}
+.header-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.hbtn{padding:7px 14px;border-radius:8px;border:1.5px solid var(--border);background:transparent;font-family:var(--sans);font-size:13px;cursor:pointer;color:var(--text);transition:all .15s;font-weight:500;white-space:nowrap}
+.hbtn:hover{border-color:var(--border-strong);background:var(--bg)}
+.hbtn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.hbtn.primary:hover{background:#0F2218}
 
-/* Stats bar */
-.stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--surface); border-bottom: 1px solid var(--border); }
-.stat { padding: 16px 24px; border-right: 1px solid var(--border); }
-.stat:last-child { border-right: none; }
-.stat-n { font-size: 28px; font-weight: 700; font-family: var(--mono); line-height: 1; }
-.stat-l { font-size: 12px; color: var(--text-3); margin-top: 4px; }
-.stat-n.s-total { color: var(--text); }
-.stat-n.s-present { color: var(--present); }
-.stat-n.s-absent { color: var(--absent); }
-.stat-n.s-pct { color: var(--accent); }
+/* Stats */
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);background:var(--surface);border-bottom:1px solid var(--border)}
+.stat{padding:12px 16px;border-right:1px solid var(--border)}
+.stat:last-child{border-right:none}
+.stat-n{font-size:24px;font-weight:700;font-family:var(--mono);line-height:1}
+.stat-l{font-size:11px;color:var(--text-3);margin-top:3px}
+.s-total{color:var(--text)}.s-present{color:var(--present)}.s-absent{color:var(--absent)}.s-pct{color:var(--accent)}
 
 /* Toolbar */
-.toolbar { padding: 16px 28px; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-.search-wrap { position: relative; flex: 1; min-width: 200px; }
-.search-wrap input { width: 100%; padding: 9px 12px 9px 36px; border: 1.5px solid var(--border); border-radius: 8px; font-family: var(--sans); font-size: 14px; background: var(--card); color: var(--text); outline: none; transition: border .15s; }
-.search-wrap input:focus { border-color: var(--accent); }
-.search-icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--text-3); font-size: 15px; pointer-events: none; }
-.tbtn { padding: 8px 14px; border-radius: 8px; border: 1.5px solid var(--border); background: var(--card); font-family: var(--sans); font-size: 13px; cursor: pointer; color: var(--text); transition: all .15s; white-space: nowrap; font-weight: 500; }
-.tbtn:hover { border-color: var(--border-strong); }
-.tbtn.present-btn { border-color: var(--present-border); color: var(--present); background: var(--present-bg); }
-.tbtn.present-btn:hover { background: #cee9d8; }
-.tbtn.absent-btn { border-color: var(--absent-border); color: var(--absent); background: var(--absent-bg); }
-.tbtn.absent-btn:hover { background: #f5d5d5; }
+.toolbar{padding:12px 16px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.search-wrap{position:relative;flex:1;min-width:150px}
+.search-wrap input{width:100%;padding:8px 10px 8px 32px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--sans);font-size:16px;background:var(--card);color:var(--text);outline:none;transition:border .15s}
+.search-wrap input:focus{border-color:var(--accent)}
+.search-icon{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--text-3);font-size:14px;pointer-events:none}
+.tbtn{padding:7px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--card);font-family:var(--sans);font-size:12px;cursor:pointer;color:var(--text);transition:all .15s;white-space:nowrap;font-weight:500}
+.tbtn:hover{border-color:var(--border-strong)}
+.tbtn.present-btn{border-color:var(--present-border);color:var(--present);background:var(--present-bg)}
+.tbtn.absent-btn{border-color:var(--absent-border);color:var(--absent);background:var(--absent-bg)}
 
-/* Table */
-.table-wrap { overflow-y: auto; height: calc(100vh - 230px); }
-table { width: 100%; border-collapse: collapse; }
-thead th { padding: 11px 16px; text-align: left; font-size: 11px; font-family: var(--mono); letter-spacing: .08em; color: var(--text-3); text-transform: uppercase; background: var(--surface); border-bottom: 1.5px solid var(--border); position: sticky; top: 0; z-index: 2; }
-tbody tr { border-bottom: 1px solid var(--border); transition: background .1s; }
-tbody tr:hover { background: #F7F5F0; }
-td { padding: 10px 16px; vertical-align: middle; }
-.td-num { font-family: var(--mono); font-size: 12px; color: var(--text-3); width: 44px; }
-.td-id { font-family: var(--mono); font-size: 12px; color: var(--text-2); }
-.td-name { font-weight: 500; font-size: 14px; }
-.type-chip { display: inline-block; font-size: 10px; font-family: var(--mono); padding: 2px 8px; border-radius: 20px; border: 1px solid; }
-.type-t { color: #185FA5; border-color: #B5D4F4; background: #E6F1FB; }
-.type-f { color: #534AB7; border-color: #CECBF6; background: #EEEDFE; }
+/* Table — desktop */
+.table-wrap{overflow-y:auto;flex:1}
+table{width:100%;border-collapse:collapse}
+thead th{padding:9px 12px;text-align:left;font-size:10px;font-family:var(--mono);letter-spacing:.08em;color:var(--text-3);text-transform:uppercase;background:var(--surface);border-bottom:1.5px solid var(--border);position:sticky;top:0;z-index:2}
+tbody tr{border-bottom:1px solid var(--border);transition:background .1s}
+tbody tr:hover{background:#F7F5F0}
+td{padding:8px 12px;vertical-align:middle}
+.td-num{font-family:var(--mono);font-size:11px;color:var(--text-3);width:36px}
+.td-id{font-family:var(--mono);font-size:11px;color:var(--text-2)}
+.td-name{font-weight:500;font-size:13px}
+.type-chip{display:inline-block;font-size:9px;font-family:var(--mono);padding:2px 6px;border-radius:20px;border:1px solid}
+.type-t{color:#185FA5;border-color:#B5D4F4;background:#E6F1FB}
+.type-f{color:#534AB7;border-color:#CECBF6;background:#EEEDFE}
 
-/* Attendance controls */
-.att-cell { display: flex; align-items: center; gap: 8px; min-width: 340px; }
-.att-toggle { display: flex; border: 1.5px solid var(--border); border-radius: 8px; overflow: hidden; }
-.att-btn { padding: 6px 16px; font-family: var(--sans); font-size: 13px; font-weight: 500; border: none; background: transparent; cursor: pointer; color: var(--text-2); transition: all .15s; line-height: 1.4; }
-.att-btn:hover { background: var(--bg); }
-.att-btn.active-present { background: var(--present-bg); color: var(--present); }
-.att-btn.active-absent { background: var(--absent-bg); color: var(--absent); }
-.att-divider { width: 1px; background: var(--border); }
-.reason-wrap { flex: 1; }
-.reason-input { width: 100%; padding: 6px 10px; border: 1.5px solid var(--border); border-radius: 7px; font-family: var(--sans); font-size: 12px; color: var(--text); background: var(--card); outline: none; transition: all .15s; }
-.reason-input:focus { border-color: var(--accent); }
-.reason-input:disabled { background: #F0EDE8; color: var(--text-3); cursor: not-allowed; }
-.reason-select { padding: 6px 10px; border: 1.5px solid var(--border); border-radius: 7px; font-family: var(--sans); font-size: 12px; color: var(--text); background: var(--card); outline: none; transition: all .15s; cursor: pointer; }
-.reason-select:focus { border-color: var(--absent); }
-.reason-select:disabled { background: #F0EDE8; color: var(--text-3); cursor: not-allowed; }
+/* Mobile card view (hidden on desktop) */
+.card-list{display:none;flex-direction:column;gap:0;overflow-y:auto;flex:1}
+.student-card{background:var(--card);border-bottom:1px solid var(--border);padding:12px 14px}
+.card-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.card-info{flex:1;min-width:0}
+.card-name{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-id{font-size:11px;font-family:var(--mono);color:var(--text-3);margin-top:2px}
+.card-chips{display:flex;gap:4px;flex-wrap:wrap}
+.card-att{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.att-toggle{display:flex;border:1.5px solid var(--border);border-radius:8px;overflow:hidden}
+.att-btn{padding:6px 14px;font-family:var(--sans);font-size:13px;font-weight:500;border:none;background:transparent;cursor:pointer;color:var(--text-2);transition:all .15s;line-height:1.4}
+.att-btn:hover{background:var(--bg)}
+.att-btn.active-present{background:var(--present-bg);color:var(--present)}
+.att-btn.active-absent{background:var(--absent-bg);color:var(--absent)}
+.att-divider{width:1px;background:var(--border)}
+.card-reason{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.reason-select{flex:1;min-width:120px;padding:6px 8px;border:1.5px solid var(--border);border-radius:7px;font-family:var(--sans);font-size:12px;color:var(--text);background:var(--card);outline:none}
+.reason-select:focus{border-color:var(--absent)}
+.reason-select:disabled{background:#F0EDE8;color:var(--text-3)}
+.reason-input{flex:1;min-width:100px;padding:6px 8px;border:1.5px solid var(--border);border-radius:7px;font-family:var(--sans);font-size:12px;color:var(--text);background:var(--card);outline:none}
+.reason-input:focus{border-color:var(--accent)}
+.reason-input:disabled{background:#F0EDE8;color:var(--text-3)}
+.card-actions{display:flex;gap:4px;flex-shrink:0}
+.action-btns{display:flex;gap:3px}
+.del-btn,.edit-btn{width:28px;height:28px;border-radius:6px;border:1px solid var(--border);background:transparent;cursor:pointer;font-size:13px;display:inline-flex;align-items:center;justify-content:center;transition:all .15s;color:var(--text-3)}
+.del-btn:hover{border-color:var(--absent-border);color:var(--absent);background:var(--absent-bg)}
+.edit-btn:hover{border-color:#B5D4F4;color:#185FA5;background:#E6F1FB}
 
-/* Status badge on row */
-.row-status { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; padding: 2px 8px; border-radius: 20px; border: 1px solid; font-family: var(--mono); white-space: nowrap; }
-.row-status.present { color: var(--present); border-color: var(--present-border); background: var(--present-bg); }
-.row-status.absent { color: var(--absent); border-color: var(--absent-border); background: var(--absent-bg); }
-.row-status.none { color: var(--text-3); border-color: var(--border); background: transparent; }
+/* Desktop table att cell */
+.att-cell{display:flex;align-items:center;gap:6px;min-width:300px;flex-wrap:wrap}
 
 /* Modal */
-.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(10,10,8,.45); z-index: 200; align-items: center; justify-content: center; }
-.modal-overlay.open { display: flex; }
-.modal { background: var(--card); border-radius: 14px; padding: 28px; width: 400px; border: 1px solid var(--border); box-shadow: 0 20px 60px rgba(0,0,0,.15); }
-.modal h3 { font-size: 17px; font-weight: 600; margin-bottom: 20px; }
-.field { margin-bottom: 14px; }
-.field label { display: block; font-size: 12px; font-family: var(--mono); color: var(--text-3); letter-spacing: .08em; margin-bottom: 5px; text-transform: uppercase; }
-.field input, .field select { width: 100%; padding: 9px 12px; border: 1.5px solid var(--border); border-radius: 8px; font-family: var(--sans); font-size: 14px; color: var(--text); background: var(--card); outline: none; transition: border .15s; }
-.field input:focus, .field select:focus { border-color: var(--accent); }
-.field-err { font-size: 12px; color: var(--absent); margin-top: 4px; display: none; }
-.modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 20px; }
-.mdbtn { padding: 9px 20px; border-radius: 8px; border: 1.5px solid var(--border); font-family: var(--sans); font-size: 14px; cursor: pointer; font-weight: 500; transition: all .15s; }
-.mdbtn:hover { background: var(--bg); }
-.mdbtn.confirm { background: var(--accent); color: #fff; border-color: var(--accent); }
-.mdbtn.confirm:hover { background: #0F2218; }
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,10,8,.45);z-index:200;align-items:center;justify-content:center;padding:16px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--card);border-radius:14px;padding:24px;width:100%;max-width:400px;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,.15)}
+.modal h3{font-size:16px;font-weight:600;margin-bottom:16px}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:11px;font-family:var(--mono);color:var(--text-3);letter-spacing:.08em;margin-bottom:4px;text-transform:uppercase}
+.field input,.field select{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--sans);font-size:16px;color:var(--text);background:var(--card);outline:none;transition:border .15s}
+.field input:focus,.field select:focus{border-color:var(--accent)}
+.field-err{font-size:12px;color:var(--absent);margin-top:4px;display:none}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
+.mdbtn{padding:8px 18px;border-radius:8px;border:1.5px solid var(--border);font-family:var(--sans);font-size:13px;cursor:pointer;font-weight:500;transition:all .15s}
+.mdbtn:hover{background:var(--bg)}
+.mdbtn.confirm{background:var(--accent);color:#fff;border-color:var(--accent)}
+.mdbtn.confirm:hover{background:#0F2218}
 
-/* Action btns */
-.action-btns { display: flex; gap: 4px; }
-.del-btn { width: 26px; height: 26px; border-radius: 6px; border: 1px solid var(--border); background: transparent; color: var(--text-3); cursor: pointer; font-size: 13px; display: inline-flex; align-items: center; justify-content: center; transition: all .15s; }
-.del-btn:hover { border-color: var(--absent-border); color: var(--absent); background: var(--absent-bg); }
-.edit-btn { width: 26px; height: 26px; border-radius: 6px; border: 1px solid var(--border); background: transparent; color: var(--text-3); cursor: pointer; font-size: 13px; display: inline-flex; align-items: center; justify-content: center; transition: all .15s; }
-.edit-btn:hover { border-color: #B5D4F4; color: #185FA5; background: #E6F1FB; }
+.empty{text-align:center;padding:40px;color:var(--text-3);font-size:13px}
 
-/* Empty */
-.empty { text-align: center; padding: 48px; color: var(--text-3); font-size: 14px; }
+/* Print */
+@media print{
+  .sidebar,.topbar,.toolbar,.main-header,.stats-bar,.header-actions,.att-toggle,.del-btn,.edit-btn,.action-btns,.card-actions,.card-reason,.sidebar-overlay{display:none!important}
+  .page{display:block}
+  .table-wrap{height:auto;overflow:visible}
+  .card-list{display:none!important}
+  body{background:#fff}
+  .print-header{display:block!important}
+  table{font-size:12px}
+  thead th{background:#f5f5f5}
+  tbody tr{break-inside:avoid}
+}
+.print-header{display:none;padding:0 0 16px}
+.print-header h2{font-size:17px;font-weight:700;margin-bottom:3px}
+.print-header p{font-size:12px;color:#555}
 
-/* Print/Export */
-@media print {
-  .sidebar, .toolbar, .main-header, .stats-bar, .header-actions, .att-toggle, .del-btn, .edit-btn, .action-btns { display: none !important; }
-  .page { display: block; }
-  .table-wrap { height: auto; overflow: visible; }
-  body { background: #fff; }
-  .att-cell { display: block; }
-  .reason-wrap { margin-top: 4px; }
-  .print-header { display: block !important; }
-  table { font-size: 12px; }
-  thead th { background: #f5f5f5; }
-  tbody tr { break-inside: avoid; }
+/* ===== MOBILE RESPONSIVE ===== */
+@media(max-width:768px){
+  .page{grid-template-columns:1fr}
+  .sidebar{
+    position:fixed;left:-100%;top:0;height:100%;height:100dvh;
+    width:min(300px,85vw);transition:left .25s ease;z-index:50;
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  .sidebar.open{left:0}
+  .topbar{
+    display:flex;
+    padding-top:calc(12px + env(safe-area-inset-top));
+    padding-left:calc(16px + env(safe-area-inset-left));
+    padding-right:calc(16px + env(safe-area-inset-right));
+  }
+  .main{padding-bottom:env(safe-area-inset-bottom)}
+  .main-header{padding:12px 14px}
+  .main-title{font-size:15px}
+  /* hide the desktop header action buttons on mobile to avoid clutter */
+  .main-header .header-actions{display:none}
+  .stats-bar{grid-template-columns:repeat(2,1fr)}
+  .stat{padding:10px 12px}
+  .stat-n{font-size:20px}
+  .toolbar{padding:10px 12px;gap:6px;flex-wrap:wrap}
+  .search-wrap{min-width:0;flex:1 1 150px}
+  .tbtn{font-size:12px;padding:7px 10px;flex-shrink:0}
+  /* Hide desktop table, show cards */
+  .table-wrap{display:none}
+  .card-list{display:flex}
+  /* Larger touch targets for cards */
+  .att-btn{min-height:40px;padding:8px 16px;font-size:14px}
+  .del-btn,.edit-btn{width:36px;height:36px;font-size:15px}
+  /* Modal full-width on mobile */
+  .modal-overlay{align-items:flex-end;padding:0}
+  .modal{
+    border-radius:18px 18px 0 0;max-width:100%;width:100%;
+    padding:20px 18px calc(20px + env(safe-area-inset-bottom));
+    max-height:90dvh;overflow-y:auto;
+  }
+  /* Hamburger bigger touch target */
+  .hamburger{width:42px;height:42px;font-size:20px}
+}
+@media(max-width:420px){
+  .stats-bar{grid-template-columns:repeat(2,1fr)}
+  .att-btn{padding:8px 12px;font-size:13px}
+  .card-name{font-size:13px}
+  .reason-select,.reason-input{font-size:13px}
 }
 
-.print-header { display: none; padding: 0 0 20px; }
-.print-header h2 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
-.print-header p { font-size: 13px; color: #555; }
-
-/* Scrollbar */
-::-webkit-scrollbar { width: 5px; height: 5px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:10px}
 </style>
 </head>
 <body>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 <div class="page">
 
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <div class="sidebar-logo">RUDI · Engineering</div>
-      <div class="sidebar-title">ระบบเช็คชื่อ<br>นักศึกษา</div>
-      <div class="sidebar-sub">ปีการศึกษา 2569</div>
-    </div>
-
-    <div class="sidebar-section">
-      <div class="sidebar-label">กลุ่มนักศึกษา</div>
-      <button class="tab-btn active" onclick="setTab('all')" id="tab-all">
-        ทั้งหมด <span class="tab-pill" id="pill-all">0</span>
-      </button>
-      <button class="tab-btn" onclick="setTab('transfer')" id="tab-transfer">
-        เทียบโอน <span class="tab-pill" id="pill-transfer">0</span>
-      </button>
-      <button class="tab-btn" onclick="setTab('four')" id="tab-four">
-        4 ปี <span class="tab-pill" id="pill-four">0</span>
-      </button>
-    </div>
-
-    <div class="date-section">
-      <div class="date-label">วันที่เช็คชื่อ</div>
-      <div class="date-list" id="dateList"></div>
-      <div class="date-add-box">
-        <div class="date-add-label">เพิ่มวันใหม่</div>
-        <input type="date" id="datePicker" class="date-picker-input">
-        <div style="display:flex;gap:6px;margin-top:8px">
-          <button class="sidebar-btn-sm today-btn" onclick="addToday()">วันนี้</button>
-          <button class="sidebar-btn-sm confirm-btn" onclick="addDateFromPicker()">+ เพิ่ม</button>
-        </div>
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">RUDI · Engineering</div>
+    <div class="sidebar-title">ระบบเช็คชื่อ<br>นักศึกษา</div>
+    <div class="sidebar-sub">ปีการศึกษา 2568–2569</div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">กลุ่มนักศึกษา</div>
+    <button class="tab-btn active" onclick="setTab('all')" id="tab-all">ทั้งหมด <span class="tab-pill" id="pill-all">0</span></button>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">ปี 2 (2568)</div>
+    <button class="tab-btn" onclick="setTab('y2-all')" id="tab-y2-all">ทั้งหมดปี 2 <span class="tab-pill" id="pill-y2-all">0</span></button>
+    <button class="tab-btn" onclick="setTab('y2-four')" id="tab-y2-four">4 ปี <span class="tab-pill" id="pill-y2-four">0</span></button>
+    <button class="tab-btn" onclick="setTab('y2-transfer')" id="tab-y2-transfer">เทียบโอน <span class="tab-pill" id="pill-y2-transfer">0</span></button>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">ปี 1 (2569)</div>
+    <button class="tab-btn" onclick="setTab('y1-all')" id="tab-y1-all">ทั้งหมดปี 1 <span class="tab-pill" id="pill-y1-all">0</span></button>
+    <button class="tab-btn" onclick="setTab('y1-four')" id="tab-y1-four">4 ปี <span class="tab-pill" id="pill-y1-four">0</span></button>
+    <button class="tab-btn" onclick="setTab('y1-transfer')" id="tab-y1-transfer">เทียบโอน <span class="tab-pill" id="pill-y1-transfer">0</span></button>
+  </div>
+  <div class="date-section">
+    <div class="date-label">วันที่เช็คชื่อ</div>
+    <div class="date-list" id="dateList"></div>
+    <div class="date-add-box">
+      <div class="date-add-label">เพิ่มวันใหม่</div>
+      <input type="date" id="datePicker" class="date-picker-input">
+      <div class="date-add-row">
+        <button class="sidebar-btn-sm today-btn" onclick="addToday()">วันนี้</button>
+        <button class="sidebar-btn-sm confirm-btn" onclick="addDateFromPicker()">+ เพิ่ม</button>
       </div>
-    </div>
-    <div class="date-actions">
-      <button class="sidebar-btn" onclick="exportPDF()">⬇ Export PDF</button>
-    </div>
-  </aside>
-
-  <!-- Main -->
-  <div class="main">
-    <div class="main-header">
-      <div>
-        <div class="main-title" id="mainTitle">เช็คชื่อ</div>
-        <div class="main-sub" id="mainSub">วิศวกรรมศาสตรบัณฑิต · สาขาวิศวกรรมคอมพิวเตอร์</div>
-      </div>
-      <div class="header-actions">
-        <button class="hbtn" onclick="openAdd()">+ เพิ่มรายชื่อ</button>
-        <button class="hbtn primary" onclick="exportPDF()">⬇ Export PDF</button>
-      </div>
-    </div>
-
-    <div class="stats-bar">
-      <div class="stat"><div class="stat-n s-total" id="sTotal">0</div><div class="stat-l">นักศึกษาทั้งหมด</div></div>
-      <div class="stat"><div class="stat-n s-present" id="sPresent">0</div><div class="stat-l">มา</div></div>
-      <div class="stat"><div class="stat-n s-absent" id="sAbsent">0</div><div class="stat-l">ไม่มา</div></div>
-      <div class="stat"><div class="stat-n s-pct" id="sPct">0%</div><div class="stat-l">อัตราการมา</div></div>
-    </div>
-
-    <div class="toolbar">
-      <div class="search-wrap">
-        <span class="search-icon">🔍</span>
-        <input type="text" id="search" placeholder="ค้นหาชื่อ หรือรหัสนักศึกษา..." oninput="render()">
-      </div>
-      <button class="tbtn present-btn" onclick="setAll(true)">✓ มาทุกคน</button>
-      <button class="tbtn absent-btn" onclick="setAll(false)">✗ ไม่มาทุกคน</button>
-      <button class="tbtn" onclick="resetAll()">↺ รีเซ็ต</button>
-    </div>
-
-    <div class="print-header" id="printHeader">
-      <h2 id="phTitle"></h2>
-      <p id="phSub"></p>
-    </div>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th style="width:44px">#</th>
-            <th style="width:130px">รหัสนักศึกษา</th>
-            <th>ชื่อ-นามสกุล</th>
-            <th style="width:90px">ประเภท</th>
-            <th style="width:200px">สถานะ</th>
-            <th>เหตุผลที่ไม่มา</th>
-            <th style="width:70px"></th>
-          </tr>
-        </thead>
-        <tbody id="tbody"></tbody>
-      </table>
-      <div id="emptyMsg" class="empty" style="display:none">ไม่พบรายชื่อที่ค้นหา</div>
     </div>
   </div>
+  <div class="date-actions">
+    <button class="sidebar-btn" onclick="exportPDF()">⬇ Export PDF</button>
+  </div>
+</aside>
+
+<!-- Main -->
+<div class="main">
+  <!-- Mobile topbar -->
+  <div class="topbar">
+    <button class="hamburger" onclick="openSidebar()">☰</button>
+    <div>
+      <div class="topbar-title" id="topbarTitle">เช็คชื่อนักศึกษา</div>
+      <div class="topbar-sub" id="topbarSub">ราชภัฎอุดรธานี</div>
+    </div>
+    <button class="hbtn primary" onclick="exportPDF()" style="font-size:11px;padding:6px 10px">⬇ PDF</button>
+  </div>
+
+  <div class="main-header">
+    <div>
+      <div class="main-title" id="mainTitle">เช็คชื่อ</div>
+      <div class="main-sub">วิศวกรรมศาสตรบัณฑิต · ราชภัฎอุดรธานี</div>
+    </div>
+    <div class="header-actions">
+      <button class="hbtn" onclick="openAdd()">+ เพิ่มรายชื่อ</button>
+      <button class="hbtn primary" onclick="exportPDF()">⬇ Export PDF</button>
+    </div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat"><div class="stat-n s-total" id="sTotal">0</div><div class="stat-l">ทั้งหมด</div></div>
+    <div class="stat"><div class="stat-n s-present" id="sPresent">0</div><div class="stat-l">มา</div></div>
+    <div class="stat"><div class="stat-n s-absent" id="sAbsent">0</div><div class="stat-l">ไม่มา</div></div>
+    <div class="stat"><div class="stat-n s-pct" id="sPct">—</div><div class="stat-l">อัตราการมา</div></div>
+  </div>
+
+  <div class="toolbar">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search" placeholder="ค้นหาชื่อ / รหัส..." oninput="render()">
+    </div>
+    <button class="tbtn present-btn" onclick="setAll(true)">✓ มาทุกคน</button>
+    <button class="tbtn absent-btn" onclick="setAll(false)">✗ ไม่มาทุกคน</button>
+    <button class="tbtn" onclick="resetAll()">↺ รีเซ็ต</button>
+  </div>
+
+  <!-- Desktop table -->
+  <div class="table-wrap" id="tableWrap">
+    <div class="print-header" id="printHeader">
+      <h2 id="phTitle"></h2><p id="phSub"></p>
+    </div>
+    <table>
+      <thead><tr>
+        <th style="width:36px">#</th>
+        <th style="width:120px">รหัส</th>
+        <th>ชื่อ-นามสกุล</th>
+        <th style="width:100px">ประเภท</th>
+        <th style="width:180px">สถานะ</th>
+        <th>เหตุผลที่ไม่มา</th>
+        <th style="width:62px"></th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <div id="emptyMsg" class="empty" style="display:none">ไม่พบรายชื่อ</div>
+  </div>
+
+  <!-- Mobile cards -->
+  <div class="card-list" id="cardList"></div>
+</div>
 </div>
 
-<!-- Add student modal -->
+<!-- Add modal -->
 <div class="modal-overlay" id="addModal">
   <div class="modal">
     <h3>เพิ่มรายชื่อนักศึกษา</h3>
-    <div class="field">
-      <label>รหัสนักศึกษา</label>
-      <input type="text" id="addId" placeholder="เช่น 69041308135">
-    </div>
-    <div class="field">
-      <label>ชื่อ-นามสกุล</label>
-      <input type="text" id="addName" placeholder="เช่น นายสมชาย ใจดี">
-    </div>
-    <div class="field">
-      <label>ประเภทนักศึกษา</label>
-      <select id="addType">
-        <option value="transfer">เทียบโอน — รหัสขึ้นต้น 69001308</option>
-        <option value="four">4 ปี — รหัสขึ้นต้น 69041308</option>
-      </select>
-    </div>
+    <div class="field"><label>รหัสนักศึกษา</label><input type="text" id="addId" placeholder="เช่น 69041308135"></div>
+    <div class="field"><label>ชื่อ-นามสกุล</label><input type="text" id="addName" placeholder="เช่น นายสมชาย ใจดี"></div>
+    <div class="field"><label>ชั้นปี</label>
+      <select id="addYear"><option value="y1">ปี 1 (2569)</option><option value="y2">ปี 2 (2568)</option></select></div>
+    <div class="field"><label>ประเภท</label>
+      <select id="addType"><option value="transfer">เทียบโอน</option><option value="four">4 ปี</option></select></div>
     <div class="field-err" id="addErr"></div>
     <div class="modal-actions">
       <button class="mdbtn" onclick="closeAdd()">ยกเลิก</button>
-      <button class="mdbtn confirm" onclick="confirmAdd()">เพิ่มรายชื่อ</button>
+      <button class="mdbtn confirm" onclick="confirmAdd()">เพิ่ม</button>
     </div>
   </div>
 </div>
 
-<!-- Edit student modal -->
+<!-- Edit modal -->
 <div class="modal-overlay" id="editModal">
   <div class="modal">
     <h3>แก้ไขข้อมูลนักศึกษา</h3>
-    <div class="field">
-      <label>รหัสนักศึกษา</label>
-      <input type="text" id="editId" placeholder="เช่น 69041308135">
-    </div>
-    <div class="field">
-      <label>ชื่อ-นามสกุล</label>
-      <input type="text" id="editName" placeholder="เช่น นายสมชาย ใจดี">
-    </div>
-    <div class="field">
-      <label>ประเภทนักศึกษา</label>
-      <select id="editType">
-        <option value="transfer">เทียบโอน — รหัสขึ้นต้น 69001308</option>
-        <option value="four">4 ปี — รหัสขึ้นต้น 69041308</option>
-      </select>
-    </div>
+    <div class="field"><label>รหัสนักศึกษา</label><input type="text" id="editId"></div>
+    <div class="field"><label>ชื่อ-นามสกุล</label><input type="text" id="editName"></div>
+    <div class="field"><label>ชั้นปี</label>
+      <select id="editYear"><option value="y1">ปี 1 (2569)</option><option value="y2">ปี 2 (2568)</option></select></div>
+    <div class="field"><label>ประเภท</label>
+      <select id="editType"><option value="transfer">เทียบโอน</option><option value="four">4 ปี</option></select></div>
     <div class="field-err" id="editErr"></div>
     <div class="modal-actions">
       <button class="mdbtn" onclick="closeEdit()">ยกเลิก</button>
@@ -348,398 +381,437 @@ td { padding: 10px 16px; vertical-align: middle; }
 </div>
 
 <script>
-const REASONS = [
-  '— ระบุเหตุผล —',
-  'ลาป่วย',
-  'ลากิจ',
-  'ติดธุระส่วนตัว',
-  'รถติด / ปัญหาการเดินทาง',
-  'ไม่ทราบเหตุผล',
-  'อื่นๆ (ระบุในช่องข้อความ)',
-];
+const REASONS=['— ระบุเหตุผล —','ลาป่วย','ลากิจ','ติดธุระส่วนตัว','รถติด / ปัญหาการเดินทาง','ไม่ทราบเหตุผล','อื่นๆ (ระบุในช่องข้อความ)'];
 
 let students = [
-  {id:"69001308101",name:"นายอภิชัย คำจันทราช",type:"transfer"},
-  {id:"69001308102",name:"นายณัฐธนา ทิโส",type:"transfer"},
-  {id:"69001308103",name:"นายธนัช ใจทัศน์",type:"transfer"},
-  {id:"69001308104",name:"นายพีรเดช ทองแตง",type:"transfer"},
-  {id:"69001308105",name:"นายอภิสิทธิ์ บานพับทอง",type:"transfer"},
-  {id:"69001308106",name:"นายตะวัน ขันแก้ว",type:"transfer"},
-  {id:"69001308107",name:"นายอาทิตย์ ใจสมัคร",type:"transfer"},
-  {id:"69001308108",name:"นายนภนต์ แก้ววันนา",type:"transfer"},
-  {id:"69001308109",name:"นายธีรเทพ เข็มศิริ",type:"transfer"},
-  {id:"69001308110",name:"นายเมธาสิทธิ์ ไสยสิทธิ์",type:"transfer"},
-  {id:"69001308111",name:"นายภูริพัฒน์ ทองทา",type:"transfer"},
-  {id:"69001308112",name:"นายวิลเลี่ยม มาร์กราฟ",type:"transfer"},
-  {id:"69001308113",name:"นายวรเมธ เวียงยิ่ง",type:"transfer"},
-  {id:"69041308101",name:"นางสาวชวัลญา เนื่องไชยศ",type:"four"},
-  {id:"69041308102",name:"นางสาวนวรัตน์ ยิ่งยงค์",type:"four"},
-  {id:"69041308103",name:"นายทาวิชญ์ แสงรวม",type:"four"},
-  {id:"69041308104",name:"นายเกียรติธนพัฒน์ กองแก้ว",type:"four"},
-  {id:"69041308105",name:"นายกิตติศักดิ์ สมบัติทองคำ",type:"four"},
-  {id:"69041308106",name:"นายณัฐภูมิ คะเนเร็ว",type:"four"},
-  {id:"69041308107",name:"นายเศวตโชติ วระไวย์",type:"four"},
-  {id:"69041308108",name:"นายนรินทร์ หินนาง",type:"four"},
-  {id:"69041308109",name:"นางสาวชนิสรา หวานเสร็จ",type:"four"},
-  {id:"69041308110",name:"นายศุภโชค สิงห์ละคร",type:"four"},
-  {id:"69041308111",name:"นายชินวัตร เนขุนทศ",type:"four"},
-  {id:"69041308112",name:"นางสาวกชกร สถานสุข",type:"four"},
-  {id:"69041308113",name:"นางสาวณัฐปาณี ฮายาชิ",type:"four"},
-  {id:"69041308114",name:"นางสาวโศรญา เบ็ญขุนทศ",type:"four"},
-  {id:"69041308115",name:"นายจิรกิตติ์ พรจันทร์ท้าว",type:"four"},
-  {id:"69041308116",name:"นางสาวจิรชยา คำเบ้าเมือง",type:"four"},
-  {id:"69041308117",name:"นายกฤษฎา จำปานิล",type:"four"},
-  {id:"69041308118",name:"นายศรัณยพงษ์ ระหา",type:"four"},
-  {id:"69041308119",name:"นายภูริทัต ชัยรัตน์",type:"four"},
-  {id:"69041308120",name:"นางสาวสุวิตา ทองโส",type:"four"},
-  {id:"69041308121",name:"นายณัฐวุฒิ สุพรม",type:"four"},
-  {id:"69041308122",name:"นายฐิติวัสส์ นามรักษ์",type:"four"},
-  {id:"69041308123",name:"นายวายุ ป้องภา",type:"four"},
-  {id:"69041308124",name:"นางสาววิจิตรา แสนวงษ์",type:"four"},
-  {id:"69041308125",name:"นางสาวธนกมล ณัฐนันทพงษ์",type:"four"},
-  {id:"69041308126",name:"นายฮิลตัน โบธมา",type:"four"},
-  {id:"69041308127",name:"นางสาวปรัชญาภรณ์ พรหมเทศ",type:"four"},
-  {id:"69041308128",name:"นางสาวพรพิมล ช่วยปุ้ง",type:"four"},
-  {id:"69041308129",name:"นางสาวณัฐกาญจน์ สีทำเลา",type:"four"},
-  {id:"69041308130",name:"นายอดิเทพ มะลิจันทร์",type:"four"},
-  {id:"69041308201",name:"นางสาวนวรัตน์ วงค์ษา",type:"four"},
-  {id:"69041308202",name:"นายปริพัฒน์ ศิริวิชา",type:"four"},
-  {id:"69041308203",name:"นางสาวปวันรัตน์ เสียงใส",type:"four"},
-  {id:"69041308204",name:"นายนายรัชพล ฉายยิ่งเชี่ยว",type:"four"},
+  // ปี 1 เทียบโอน (2569) — 69001308
+  {id:"69001308101",name:"นายอภิชัย คำจันทราช",type:"transfer",year:"y1"},
+  {id:"69001308102",name:"นายณัฐธนา ทิโส",type:"transfer",year:"y1"},
+  {id:"69001308103",name:"นายธนัช ใจทัศน์",type:"transfer",year:"y1"},
+  {id:"69001308104",name:"นายพีรเดช ทองแตง",type:"transfer",year:"y1"},
+  {id:"69001308105",name:"นายอภิสิทธิ์ บานพับทอง",type:"transfer",year:"y1"},
+  {id:"69001308106",name:"นายตะวัน ขันแก้ว",type:"transfer",year:"y1"},
+  {id:"69001308107",name:"นายอาทิตย์ ใจสมัคร",type:"transfer",year:"y1"},
+  {id:"69001308108",name:"นายนภนต์ แก้ววันนา",type:"transfer",year:"y1"},
+  {id:"69001308109",name:"นายธีรเทพ เข็มศิริ",type:"transfer",year:"y1"},
+  {id:"69001308110",name:"นายเมธาสิทธิ์ ไสยสิทธิ์",type:"transfer",year:"y1"},
+  {id:"69001308111",name:"นายภูริพัฒน์ ทองทา",type:"transfer",year:"y1"},
+  {id:"69001308112",name:"นายวิลเลี่ยม มาร์กราฟ",type:"transfer",year:"y1"},
+  {id:"69001308113",name:"นายวรเมธ เวียงยิ่ง",type:"transfer",year:"y1"},
+  // ปี 1 4ปี (2569) — 69041308
+  {id:"69041308101",name:"นางสาวชวัลญา เนื่องไชยศ",type:"four",year:"y1"},
+  {id:"69041308102",name:"นางสาวนวรัตน์ ยิ่งยงค์",type:"four",year:"y1"},
+  {id:"69041308103",name:"นายทาวิชญ์ แสงรวม",type:"four",year:"y1"},
+  {id:"69041308104",name:"นายเกียรติธนพัฒน์ กองแก้ว",type:"four",year:"y1"},
+  {id:"69041308105",name:"นายกิตติศักดิ์ สมบัติทองคำ",type:"four",year:"y1"},
+  {id:"69041308106",name:"นายณัฐภูมิ คะเนเร็ว",type:"four",year:"y1"},
+  {id:"69041308107",name:"นายเศวตโชติ วระไวย์",type:"four",year:"y1"},
+  {id:"69041308108",name:"นายนรินทร์ หินนาง",type:"four",year:"y1"},
+  {id:"69041308109",name:"นางสาวชนิสรา หวานเสร็จ",type:"four",year:"y1"},
+  {id:"69041308110",name:"นายศุภโชค สิงห์ละคร",type:"four",year:"y1"},
+  {id:"69041308111",name:"นายชินวัตร เนขุนทศ",type:"four",year:"y1"},
+  {id:"69041308112",name:"นางสาวกชกร สถานสุข",type:"four",year:"y1"},
+  {id:"69041308113",name:"นางสาวณัฐปาณี ฮายาชิ",type:"four",year:"y1"},
+  {id:"69041308114",name:"นางสาวโศรญา เบ็ญขุนทศ",type:"four",year:"y1"},
+  {id:"69041308115",name:"นายจิรกิตติ์ พรจันทร์ท้าว",type:"four",year:"y1"},
+  {id:"69041308116",name:"นางสาวจิรชยา คำเบ้าเมือง",type:"four",year:"y1"},
+  {id:"69041308117",name:"นายกฤษฎา จำปานิล",type:"four",year:"y1"},
+  {id:"69041308118",name:"นายศรัณยพงษ์ ระหา",type:"four",year:"y1"},
+  {id:"69041308119",name:"นายภูริทัต ชัยรัตน์",type:"four",year:"y1"},
+  {id:"69041308120",name:"นางสาวสุวิตา ทองโส",type:"four",year:"y1"},
+  {id:"69041308121",name:"นายณัฐวุฒิ สุพรม",type:"four",year:"y1"},
+  {id:"69041308122",name:"นายฐิติวัสส์ นามรักษ์",type:"four",year:"y1"},
+  {id:"69041308123",name:"นายวายุ ป้องภา",type:"four",year:"y1"},
+  {id:"69041308124",name:"นางสาววิจิตรา แสนวงษ์",type:"four",year:"y1"},
+  {id:"69041308125",name:"นางสาวธนกมล ณัฐนันทพงษ์",type:"four",year:"y1"},
+  {id:"69041308126",name:"นายฮิลตัน โบธมา",type:"four",year:"y1"},
+  {id:"69041308127",name:"นางสาวปรัชญาภรณ์ พรหมเทศ",type:"four",year:"y1"},
+  {id:"69041308128",name:"นางสาวพรพิมล ช่วยปุ้ง",type:"four",year:"y1"},
+  {id:"69041308129",name:"นางสาวณัฐกาญจน์ สีทำเลา",type:"four",year:"y1"},
+  {id:"69041308130",name:"นายอดิเทพ มะลิจันทร์",type:"four",year:"y1"},
+  {id:"69041308201",name:"นางสาวนวรัตน์ วงค์ษา",type:"four",year:"y1"},
+  {id:"69041308202",name:"นายปริพัฒน์ ศิริวิชา",type:"four",year:"y1"},
+  {id:"69041308203",name:"นางสาวปวันรัตน์ เสียงใส",type:"four",year:"y1"},
+  {id:"69041308204",name:"นายนายรัชพล ฉายยิ่งเชี่ยว",type:"four",year:"y1"},
+  // ปี 2 เทียบโอน (2568) — 68001308 (ตัดคนที่ย้ายห้อง/ขาดวุฒิออก)
+  {id:"68001308102",name:"นายวราเทพ วงษ์ชาลี",type:"transfer",year:"y2"},
+  {id:"68001308103",name:"นายถิรนัย นิลสิงขรณ์",type:"transfer",year:"y2"},
+  {id:"68001308104",name:"นายศิริวุฒิ บุตรดามา",type:"transfer",year:"y2"},
+  {id:"68001308105",name:"นายปฐมพร ใจชื่น",type:"transfer",year:"y2"},
+  {id:"68001308106",name:"นายวินัย นาฬิกุล",type:"transfer",year:"y2"},
+  {id:"68001308107",name:"นายเอกภพ สาลีพันธ์",type:"transfer",year:"y2"},
+  {id:"68001308108",name:"นายสิทธิโชค แสงมณี",type:"transfer",year:"y2"},
+  {id:"68001308109",name:"นายธนโชติ ปัชชมูลตรี",type:"transfer",year:"y2"},
+  {id:"68001308110",name:"นางสาวอัญชิสา ก้านขวา",type:"transfer",year:"y2"},
+  {id:"68001308111",name:"นายรัชชานนท์ บุญญาพงษ์",type:"transfer",year:"y2"},
+  {id:"68001308112",name:"นางสาวกัลย์สุดา จักร์เข็ม",type:"transfer",year:"y2"},
+  {id:"68001308113",name:"นายต่อตระกูล ดำเนิน",type:"transfer",year:"y2"},
+  {id:"68001308115",name:"นายทินภัทร เดชารัมย์",type:"transfer",year:"y2"},
+  {id:"68001308116",name:"นายวิศรุต บุญเหลือ",type:"transfer",year:"y2"},
+  {id:"68001308117",name:"นางสาวปณิดา ขมิ้นขาว",type:"transfer",year:"y2"},
+  {id:"68001308118",name:"นางสาวอรพิณ จันดี",type:"transfer",year:"y2"},
+  {id:"68001308119",name:"นางสาวยุวรี หันบัญญัติ",type:"transfer",year:"y2"},
+  {id:"68001308120",name:"นางสาวหงส์หยก กวนหล้า",type:"transfer",year:"y2"},
+  {id:"68001308121",name:"นายอภิปัญญา ว่องไว",type:"transfer",year:"y2"},
+  {id:"68001308122",name:"นายพัชสณัชค์ นันท์ประทุมตา",type:"transfer",year:"y2"},
+  {id:"68001308123",name:"นายพันธิวัฒน์ พร้อมไธสงค์",type:"transfer",year:"y2"},
+  {id:"68001308124",name:"นางสาวจิรารัตน์ ดอกไม้",type:"transfer",year:"y2"},
+  // ปี 2 4ปี (2568) — 68041308 (ตัดลาออก/ขาดการติดต่อ/ออกตามระเบียบ/ย้ายห้องออก)
+  // ย้ายห้อง (เดิมอยู่ห้องอื่น ย้ายมาอยู่ห้องนี้): 68041308131 (กฤษฎา พันชา) — เพิ่มเข้าสาย 4 ปี
+  // ขาดการติดต่อ: 68041308201 (เพชรรัตน์ หม่อมศักดิ์)
+  // ลาออก: 68041308104 (สิทธิปติ), 68041308106 (ภัทราวุธ), 68041308107 (ศิราวุฒธิ์), 68041308204 (พิพัฒน์พล), 68041308205 (สิริศักดิ์), 68041308206 (เหมราช), 68041308207 (ศวรรยา)
+  // ออกตามระเบียบ: 68041308208 (ณัฐพล)
+  {id:"68041308101",name:"นายธีรทัศน์ ปัญญาใส",type:"four",year:"y2"},
+  {id:"68041308102",name:"นายอนันตา บุตรดา",type:"four",year:"y2"},
+  {id:"68041308103",name:"นายภัคภูมิ รัติภัย",type:"four",year:"y2"},
+  {id:"68041308104",name:"นายสิทธิปติ ตันติวานนท์",type:"four",year:"y2"},
+  {id:"68041308105",name:"นายกฤษณะ วรรณวงค์",type:"four",year:"y2"},
+  {id:"68041308106",name:"นายภัทราวุธ ศรีเมือง",type:"four",year:"y2"},
+  {id:"68041308107",name:"นายศิราวุฒธิ์ ไชยยศ",type:"four",year:"y2"},
+  {id:"68041308108",name:"MISS MINTA BOUTTACHAN",type:"four",year:"y2"},
+  {id:"68041308109",name:"นายธรากร อุ่นเบ้า",type:"four",year:"y2"},
+  {id:"68041308110",name:"นายภูมิพัฒน์ แก้วพริก",type:"four",year:"y2"},
+  {id:"68041308111",name:"นายปัญญากร สาดี",type:"four",year:"y2"},
+  {id:"68041308112",name:"นายธนกร พิมพ์ศักดิ์",type:"four",year:"y2"},
+  {id:"68041308113",name:"นายเจีย เชง ไล",type:"four",year:"y2"},
+  {id:"68041308114",name:"นายธีรวัฒน์ คำภูแก้ว",type:"four",year:"y2"},
+  {id:"68041308115",name:"นายนครินทร์ ลายละเอียด",type:"four",year:"y2"},
+  {id:"68041308116",name:"นายนภัสกร เจิมทอง",type:"four",year:"y2"},
+  {id:"68041308117",name:"นายเอกภพ สาลีพันธ์",type:"four",year:"y2"},
+  {id:"68041308118",name:"นางสาววนิดา ประกอบวงษ์",type:"four",year:"y2"},
+  {id:"68041308119",name:"นายภวินท์ ศรีสามารถ",type:"four",year:"y2"},
+  {id:"68041308121",name:"นางสาวมินเช คัง",type:"four",year:"y2"},
+  {id:"68041308122",name:"นายปกรณ์ สุคนธชาติ",type:"four",year:"y2"},
+  {id:"68041308123",name:"นายวินทกร ภักดีวุฒิ",type:"four",year:"y2"},
+  {id:"68041308124",name:"นายพันธุ์พิศิษฐ์ วงค์อุดดี",type:"four",year:"y2"},
+  {id:"68041308125",name:"นางสาวปัฐมาภรณ์ บุญเพิ่ม",type:"four",year:"y2"},
+  {id:"68041308126",name:"นายกิตติวินทร์ เดชป้องหา",type:"four",year:"y2"},
+  {id:"68041308127",name:"นางสาวรสริน ทุมชะ",type:"four",year:"y2"},
+  {id:"68041308128",name:"นายศราวุธ นาคนาคา",type:"four",year:"y2"},
+  {id:"68041308129",name:"นางสาวสาริกา วิชากุล",type:"four",year:"y2"},
+  {id:"68041308130",name:"นางสาวกิตติวรา กองเข็ม",type:"four",year:"y2"},
+  {id:"68041308131",name:"นายกฤษฎา พันชา",type:"four",year:"y2"},
+  {id:"68041308202",name:"นายธิรักษ์ พิมพ์ภาเรีย",type:"four",year:"y2"},
+  {id:"68041308203",name:"นางสาวหทัยชนก อ่อนภูเขา",type:"four",year:"y2"},
+  {id:"68041308209",name:"นางสาวปวีณา พิมพ์ปัดชา",type:"four",year:"y2"},
+  {id:"68041308210",name:"นายวุฒิชัย แก้วไพฑูรย์",type:"four",year:"y2"},
+  {id:"68041308211",name:"นางสาวขนิษฐา บุญกัณฑ์",type:"four",year:"y2"},
+  {id:"68041308212",name:"นายธนภัทร ภูแสน",type:"four",year:"y2"},
+  {id:"68041308213",name:"นายเนรมิต วังคีรี",type:"four",year:"y2"},
+  {id:"68041308214",name:"นายอชิตะ ทุมโคตร",type:"four",year:"y2"},
+  {id:"68041308215",name:"นายญาฌาธิป จตุรพิธสมบัติ",type:"four",year:"y2"},
+  {id:"68041308217",name:"นายทักษ์ดนัย เรืองหอม",type:"four",year:"y2"},
+  {id:"68041308218",name:"นางสาววรัทยา คนานิตย์",type:"four",year:"y2"},
+  {id:"68041308219",name:"นายพีรพัฒน์ เริงรื่น",type:"four",year:"y2"},
+  {id:"68041308220",name:"นายธนันชัย เลิศนราพันธ์",type:"four",year:"y2"},
+  {id:"68041308221",name:"นายยอดบัวงาม บัวชาบาล",type:"four",year:"y2"},
+  {id:"68041308222",name:"นายอรรณณพ ฮ่มเมือง",type:"four",year:"y2"},
+  {id:"68041308223",name:"นายณัฐวุฒิ จำรูญโรจน์",type:"four",year:"y2"},
+  {id:"68041308224",name:"นางสาวอรปรียา โทบุตร",type:"four",year:"y2"},
+  {id:"68041308225",name:"นายกุลธวัช ทาคูบอน",type:"four",year:"y2"},
+  {id:"68041308226",name:"นางสาววิชุดา วงค์คำทิพ",type:"four",year:"y2"},
+  {id:"68041308227",name:"นางสาวซาร่า เรเชล แอนเดอร์สัน",type:"four",year:"y2"},
+  // ปี 2 เทียบโอน (2568) — 68001308 ที่ยังขาด: 68001308114 อนุภัทร (ย้ายห้อง — ตัดออก)
 ];
 
-// attendance[date][studentId] = { status: true/false/null, reason: '', reasonText: '' }
-let attendance = {};
-let dates = [];
-let currentDate = '';
-let tab = 'all';
+let attendance={};
+let dates=[];
+let currentDate='';
+let tab='all';
 
 function todayStr(){
   return new Date().toLocaleDateString('th-TH',{year:'numeric',month:'2-digit',day:'2-digit'});
 }
 
+const HARDCODED_IDS=new Set(students.map(s=>s.id));
+
 function save(){
   try{
-    sessionStorage.setItem('rudi_att',JSON.stringify(attendance));
-    sessionStorage.setItem('rudi_dates',JSON.stringify(dates));
-    sessionStorage.setItem('rudi_students',JSON.stringify(students));
+    localStorage.setItem('rudi_att',JSON.stringify(attendance));
+    localStorage.setItem('rudi_dates',JSON.stringify(dates));
+    const extras=students.filter(s=>!HARDCODED_IDS.has(s.id));
+    localStorage.setItem('rudi_extras',JSON.stringify(extras));
   }catch(e){}
 }
 
 function load(){
   try{
-    const a=sessionStorage.getItem('rudi_att');if(a)attendance=JSON.parse(a);
-    const d=sessionStorage.getItem('rudi_dates');if(d)dates=JSON.parse(d);
-    const s=sessionStorage.getItem('rudi_students');
-    if(s){
-      const extra=JSON.parse(s);
-      extra.forEach(e=>{if(!students.find(x=>x.id===e.id))students.push(e);});
-    }
+    const a=localStorage.getItem('rudi_att');if(a)attendance=JSON.parse(a);
+    const d=localStorage.getItem('rudi_dates');if(d)dates=JSON.parse(d);
+    const s=localStorage.getItem('rudi_extras');
+    if(s){const extra=JSON.parse(s);extra.forEach(e=>{if(!students.find(x=>x.id===e.id))students.push(e);});}
   }catch(e){}
 }
 
-function getAtt(sid){ return attendance[currentDate]?.[sid] ?? {status:null,reason:'',reasonText:''}; }
+function getAtt(sid){return attendance[currentDate]?.[sid]??{status:null,reason:'',reasonText:''};}
 function setAttStatus(sid,status){
   if(!attendance[currentDate])attendance[currentDate]={};
   const cur=getAtt(sid);
   attendance[currentDate][sid]={...cur,status};
-  if(status===true){ attendance[currentDate][sid].reason=''; attendance[currentDate][sid].reasonText=''; }
+  if(status===true){attendance[currentDate][sid].reason='';attendance[currentDate][sid].reasonText='';}
   save();render();
 }
-function setAttReason(sid,reason){
+function setAttReason(sid,v){
   if(!attendance[currentDate])attendance[currentDate]={};
-  const cur=getAtt(sid);
-  attendance[currentDate][sid]={...cur,reason};
-  save();
+  attendance[currentDate][sid]={...getAtt(sid),reason:v};save();
 }
-function setAttReasonText(sid,txt){
+function setAttReasonText(sid,v){
   if(!attendance[currentDate])attendance[currentDate]={};
-  const cur=getAtt(sid);
-  attendance[currentDate][sid]={...cur,reasonText:txt};
-  save();
+  attendance[currentDate][sid]={...getAtt(sid),reasonText:v};save();
 }
 
 function filtered(){
   const q=document.getElementById('search').value.toLowerCase();
-  return students.filter(s=>{
-    if(tab==='transfer'&&s.type!=='transfer')return false;
-    if(tab==='four'&&s.type!=='four')return false;
+  const list=students.filter(s=>{
+    if(tab==='y1-all'&&s.year!=='y1')return false;
+    if(tab==='y1-transfer'&&(s.year!=='y1'||s.type!=='transfer'))return false;
+    if(tab==='y1-four'&&(s.year!=='y1'||s.type!=='four'))return false;
+    if(tab==='y2-all'&&s.year!=='y2')return false;
+    if(tab==='y2-transfer'&&(s.year!=='y2'||s.type!=='transfer'))return false;
+    if(tab==='y2-four'&&(s.year!=='y2'||s.type!=='four'))return false;
     if(q&&!s.name.toLowerCase().includes(q)&&!s.id.includes(q))return false;
     return true;
   });
+  // เรียง 4 ปีก่อนเทียบโอน (เฉพาะ tab ที่มีทั้งสองประเภท)
+  if(tab==='all'||tab==='y1-all'||tab==='y2-all'){
+    list.sort((a,b)=>{
+      if(a.type===b.type)return 0;
+      return a.type==='four'?-1:1;
+    });
+  }
+  return list;
 }
 
 function setTab(t){
   tab=t;
-  ['all','transfer','four'].forEach(x=>{
-    document.getElementById('tab-'+x).classList.toggle('active',x===t);
+  document.querySelectorAll('.tab-btn').forEach(el=>{
+    const id=el.id.replace('tab-','');
+    el.classList.toggle('active',id===t);
   });
+  closeSidebar();
   render();
 }
 
-function setAll(val){
-  filtered().forEach(s=>{ setAttStatus(s.id,val); });
-}
+function setAll(val){filtered().forEach(s=>setAttStatus(s.id,val));}
 function resetAll(){
-  filtered().forEach(s=>{
-    if(attendance[currentDate])delete attendance[currentDate][s.id];
-  });
+  filtered().forEach(s=>{if(attendance[currentDate])delete attendance[currentDate][s.id];});
   save();render();
+}
+
+function makeAttCell(s){
+  const att=getAtt(s.id);
+  const st=att.status;
+  const pCls='att-btn'+(st===true?' active-present':'');
+  const aCls='att-btn'+(st===false?' active-absent':'');
+  const dis=st!==false;
+  const rOpts=REASONS.map(r=>`<option value="${r}" ${att.reason===r?'selected':''}>${r}</option>`).join('');
+  const rSel=`<select class="reason-select" ${dis?'disabled':''} onchange="setAttReason('${s.id}',this.value)">${rOpts}</select>`;
+  const rTxt=`<input type="text" class="reason-input" placeholder="รายละเอียด..." ${dis?'disabled':''} value="${(att.reasonText||'').replace(/"/g,'&quot;')}" oninput="setAttReasonText('${s.id}',this.value)">`;
+  return {pCls,aCls,rSel,rTxt};
+}
+
+function chipHtml(s){
+  const yc=s.year==='y2'
+    ?'<span class="type-chip" style="color:#7A5800;border-color:#E8D88A;background:#FDF9E0">ปี 2</span>'
+    :'<span class="type-chip" style="color:#2A6050;border-color:#A8D5C0;background:#E6F5EE">ปี 1</span>';
+  const tc=s.type==='transfer'
+    ?'<span class="type-chip type-t">เทียบโอน</span>'
+    :'<span class="type-chip type-f">4 ปี</span>';
+  return yc+' '+tc;
 }
 
 function render(){
   const list=filtered();
-  const tCount=students.filter(s=>s.type==='transfer').length;
-  const fCount=students.filter(s=>s.type==='four').length;
+  // pills
   document.getElementById('pill-all').textContent=students.length;
-  document.getElementById('pill-transfer').textContent=tCount;
-  document.getElementById('pill-four').textContent=fCount;
-
-  let present=0,absent=0,checked=0;
-  list.forEach(s=>{
-    const a=getAtt(s.id);
-    if(a.status===true){present++;checked++;}
-    else if(a.status===false){absent++;checked++;}
+  ['y1','y2'].forEach(y=>{
+    document.getElementById('pill-'+y+'-all').textContent=students.filter(s=>s.year===y).length;
+    document.getElementById('pill-'+y+'-transfer').textContent=students.filter(s=>s.year===y&&s.type==='transfer').length;
+    document.getElementById('pill-'+y+'-four').textContent=students.filter(s=>s.year===y&&s.type==='four').length;
   });
+  // stats
+  let present=0,absent=0,checked=0;
+  list.forEach(s=>{const a=getAtt(s.id);if(a.status===true){present++;checked++;}else if(a.status===false){absent++;checked++;}});
   document.getElementById('sTotal').textContent=list.length;
   document.getElementById('sPresent').textContent=present;
   document.getElementById('sAbsent').textContent=absent;
   document.getElementById('sPct').textContent=checked?Math.round(present/checked*100)+'%':'—';
-
-  const tabLabel={'all':'ทั้งหมด','transfer':'เทียบโอน','four':'4 ปี'}[tab];
+  const tabLabel={'all':'ทั้งหมด','y1-all':'ปี 1 ทั้งหมด','y1-four':'ปี 1 (4 ปี)','y1-transfer':'ปี 1 เทียบโอน','y2-all':'ปี 2 ทั้งหมด','y2-four':'ปี 2 (4 ปี)','y2-transfer':'ปี 2 เทียบโอน'}[tab]||'ทั้งหมด';
   document.getElementById('mainTitle').textContent='เช็คชื่อ — '+currentDate;
-  document.getElementById('phTitle').textContent='รายชื่อเช็คชื่อ — '+tabLabel+' ('+currentDate+')';
-  document.getElementById('phSub').textContent='มหาวิทยาลัยราชภัฎอุดรธานี · มา '+present+' คน · ไม่มา '+absent+' คน · ทั้งหมด '+list.length+' คน';
+  document.getElementById('topbarTitle').textContent=tabLabel;
+  document.getElementById('topbarSub').textContent=currentDate;
+  document.getElementById('phTitle').textContent='รายชื่อ — '+tabLabel+' ('+currentDate+')';
+  document.getElementById('phSub').textContent='มา '+present+' · ไม่มา '+absent+' · ทั้งหมด '+list.length+' คน';
 
-  const tbody=document.getElementById('tbody');
-  const empty=document.getElementById('emptyMsg');
-  if(!list.length){ tbody.innerHTML=''; empty.style.display='block'; return; }
-  empty.style.display='none';
+  const empty=!list.length;
+  document.getElementById('emptyMsg').style.display=empty?'block':'none';
 
-  tbody.innerHTML=list.map((s,i)=>{
-    const att=getAtt(s.id);
-    const st=att.status;
-    const reasonVal=att.reason||'';
-    const reasonText=att.reasonText||'';
-    const typChip=s.type==='transfer'?'<span class="type-chip type-t">เทียบโอน</span>':'<span class="type-chip type-f">4 ปี</span>';
-    const pCls='att-btn'+(st===true?' active-present':'');
-    const aCls='att-btn'+(st===false?' active-absent':'');
-    const reasonOpts=REASONS.map((r,ri)=>`<option value="${r}" ${reasonVal===r?'selected':''}>${r}</option>`).join('');
-    const disReason=st!==false;
-    const reasonSelectHtml=`<select class="reason-select" ${disReason?'disabled':''} onchange="setAttReason('${s.id}',this.value)" style="min-width:140px">${reasonOpts}</select>`;
-    const reasonTextHtml=`<input type="text" class="reason-input" placeholder="รายละเอียดเพิ่มเติม..." ${disReason?'disabled':''} value="${reasonText.replace(/"/g,'&quot;')}" oninput="setAttReasonText('${s.id}',this.value)" style="min-width:120px">`;
-
+  // Desktop table
+  document.getElementById('tbody').innerHTML=list.map((s,i)=>{
+    const {pCls,aCls,rSel,rTxt}=makeAttCell(s);
     return `<tr>
       <td class="td-num">${i+1}</td>
       <td class="td-id">${s.id}</td>
       <td class="td-name">${s.name}</td>
-      <td>${typChip}</td>
-      <td>
-        <div class="att-toggle">
-          <button class="${pCls}" onclick="setAttStatus('${s.id}',true)">มา</button>
-          <div class="att-divider"></div>
-          <button class="${aCls}" onclick="setAttStatus('${s.id}',false)">ไม่มา</button>
-        </div>
-      </td>
-      <td>
-        <div style="display:flex;gap:6px;align-items:center">
-          ${reasonSelectHtml}
-          ${reasonTextHtml}
-        </div>
-      </td>
-      <td><div class="action-btns"><button class="edit-btn" onclick="openEdit('${s.id}')" title="แก้ไข">✎</button><button class="del-btn" onclick="deleteStudent('${s.id}')" title="ลบ">✕</button></div></td>
+      <td>${chipHtml(s)}</td>
+      <td><div class="att-toggle"><button class="${pCls}" onclick="setAttStatus('${s.id}',true)">มา</button><div class="att-divider"></div><button class="${aCls}" onclick="setAttStatus('${s.id}',false)">ไม่มา</button></div></td>
+      <td><div style="display:flex;gap:6px">${rSel}${rTxt}</div></td>
+      <td><div class="action-btns"><button class="edit-btn" onclick="openEdit('${s.id}')">✎</button><button class="del-btn" onclick="delStudent('${s.id}')">✕</button></div></td>
     </tr>`;
+  }).join('');
+
+  // Mobile cards
+  document.getElementById('cardList').innerHTML=list.map((s,i)=>{
+    const {pCls,aCls,rSel,rTxt}=makeAttCell(s);
+    const att=getAtt(s.id);
+    return `<div class="student-card">
+      <div class="card-top">
+        <div class="card-info">
+          <div class="card-name">${i+1}. ${s.name}</div>
+          <div class="card-id">${s.id}</div>
+          <div class="card-chips" style="margin-top:4px">${chipHtml(s)}</div>
+        </div>
+        <div class="card-actions">
+          <div class="action-btns"><button class="edit-btn" onclick="openEdit('${s.id}')">✎</button><button class="del-btn" onclick="delStudent('${s.id}')">✕</button></div>
+        </div>
+      </div>
+      <div class="card-att">
+        <div class="att-toggle"><button class="${pCls}" onclick="setAttStatus('${s.id}',true)">มา</button><div class="att-divider"></div><button class="${aCls}" onclick="setAttStatus('${s.id}',false)">ไม่มา</button></div>
+      </div>
+      ${att.status===false?`<div class="card-reason" style="margin-top:8px">${rSel}${rTxt}</div>`:''}
+    </div>`;
   }).join('');
 
   renderDateList();
 }
 
-function deleteStudent(sid){
-  if(!confirm('ลบ '+students.find(s=>s.id===sid)?.name+' ออกจากรายชื่อ?'))return;
-  students=students.filter(s=>s.id!==sid);
-  save();render();
-}
-
 function renderDateList(){
   const dl=document.getElementById('dateList');
-  if(!dates.length){dl.innerHTML='<div style="font-size:12px;color:rgba(255,255,255,.35);padding:4px 8px">ยังไม่มีวันเช็คชื่อ</div>';return;}
+  if(!dates.length){dl.innerHTML='<div style="font-size:12px;color:rgba(255,255,255,.3);padding:4px 8px">ยังไม่มีวัน</div>';return;}
   dl.innerHTML=[...dates].reverse().map(d=>{
     const hasData=attendance[d]&&Object.keys(attendance[d]).length>0;
-    const isActive=d===currentDate;
-    return `<div class="date-item${isActive?' active':''}" onclick="switchDate('${d}')">
-      <div class="date-item-left">
-        <span class="date-dot${hasData?' has-data':''}"></span>
-        <span>${d}</span>
-      </div>
-      <button class="date-del-btn" onclick="deleteDate(event,'${d}')" title="ลบวันนี้">✕</button>
+    return `<div class="date-item${d===currentDate?' active':''}" onclick="switchDate('${d}')">
+      <div class="date-item-left"><span class="date-dot${hasData?' has-data':''}"></span><span>${d}</span></div>
+      <button class="date-del-btn" onclick="deleteDate(event,'${d}')">✕</button>
     </div>`;
   }).join('');
 }
 
-function switchDate(d){ currentDate=d; render(); }
-
+function switchDate(d){currentDate=d;render();}
 function deleteDate(e,d){
   e.stopPropagation();
   if(dates.length<=1){alert('ต้องมีอย่างน้อย 1 วัน');return;}
-  if(!confirm('ลบวัน '+d+' ออก? ข้อมูลการเช็คชื่อวันนี้จะหายไป'))return;
-  dates=dates.filter(x=>x!==d);
-  delete attendance[d];
+  if(!confirm('ลบวัน '+d+'?'))return;
+  dates=dates.filter(x=>x!==d);delete attendance[d];
   if(currentDate===d)currentDate=dates[dates.length-1];
   save();render();
 }
-
 function addToday(){
   const d=todayStr();
   if(!dates.includes(d))dates.push(d);
   currentDate=d;
-  save();render();
-  // set picker to today too
   const td=new Date();
   document.getElementById('datePicker').value=td.toISOString().split('T')[0];
+  save();render();
 }
-
 function addDateFromPicker(){
   const picker=document.getElementById('datePicker');
   if(!picker.value){alert('กรุณาเลือกวันที่ก่อน');return;}
   const [y,m,dy]=picker.value.split('-');
-  // convert to thai buddhist year display dd/mm/yyyy
-  const thY=parseInt(y)+543;
-  const ds=dy+'/'+m+'/'+thY;
+  const ds=dy+'/'+m+'/'+(parseInt(y)+543);
   if(!dates.includes(ds))dates.push(ds);
-  currentDate=ds;
-  save();render();
+  currentDate=ds;save();render();
 }
 
-function addDate(){
-  // legacy fallback — no longer called from UI
-  const d=prompt('ระบุวันที่ (เช่น 25/05/2569):',todayStr());
-  if(!d||!d.trim())return;
-  const ds=d.trim();
-  if(!dates.includes(ds))dates.push(ds);
-  currentDate=ds;
-  save();render();
+function openSidebar(){document.getElementById('sidebar').classList.add('open');document.getElementById('sidebarOverlay').classList.add('open');}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarOverlay').classList.remove('open');}
+
+function delStudent(sid){
+  if(!confirm('ลบ '+students.find(s=>s.id===sid)?.name+'?'))return;
+  students=students.filter(s=>s.id!==sid);save();render();
 }
 
-function openAdd(){ document.getElementById('addModal').classList.add('open'); document.getElementById('addErr').style.display='none'; }
-function closeAdd(){ document.getElementById('addModal').classList.remove('open'); }
+function openAdd(){document.getElementById('addModal').classList.add('open');document.getElementById('addErr').style.display='none';}
+function closeAdd(){document.getElementById('addModal').classList.remove('open');}
 function confirmAdd(){
   const id=document.getElementById('addId').value.trim();
   const name=document.getElementById('addName').value.trim();
   const type=document.getElementById('addType').value;
+  const year=document.getElementById('addYear').value;
   const err=document.getElementById('addErr');
-  if(!id||!name){ err.textContent='กรุณากรอกรหัสและชื่อ'; err.style.display='block'; return; }
-  if(students.find(s=>s.id===id)){ err.textContent='รหัสนักศึกษานี้มีอยู่แล้ว'; err.style.display='block'; return; }
-  students.push({id,name,type});
-  document.getElementById('addId').value='';
-  document.getElementById('addName').value='';
+  if(!id||!name){err.textContent='กรุณากรอกรหัสและชื่อ';err.style.display='block';return;}
+  if(students.find(s=>s.id===id)){err.textContent='รหัสนี้มีอยู่แล้ว';err.style.display='block';return;}
+  students.push({id,name,type,year});
+  document.getElementById('addId').value='';document.getElementById('addName').value='';
   save();closeAdd();render();
 }
 
-let editTargetId = null;
+let editTargetId=null;
 function openEdit(sid){
-  const s=students.find(x=>x.id===sid);
-  if(!s)return;
+  const s=students.find(x=>x.id===sid);if(!s)return;
   editTargetId=sid;
   document.getElementById('editId').value=s.id;
   document.getElementById('editName').value=s.name;
   document.getElementById('editType').value=s.type;
+  document.getElementById('editYear').value=s.year||'y1';
   document.getElementById('editErr').style.display='none';
   document.getElementById('editModal').classList.add('open');
 }
-function closeEdit(){ document.getElementById('editModal').classList.remove('open'); editTargetId=null; }
+function closeEdit(){document.getElementById('editModal').classList.remove('open');editTargetId=null;}
 function confirmEdit(){
   const newId=document.getElementById('editId').value.trim();
   const newName=document.getElementById('editName').value.trim();
   const newType=document.getElementById('editType').value;
+  const newYear=document.getElementById('editYear').value;
   const err=document.getElementById('editErr');
-  if(!newId||!newName){ err.textContent='กรุณากรอกรหัสและชื่อ'; err.style.display='block'; return; }
-  if(newId!==editTargetId && students.find(s=>s.id===newId)){ err.textContent='รหัสนักศึกษานี้มีอยู่แล้ว'; err.style.display='block'; return; }
-  const idx=students.findIndex(s=>s.id===editTargetId);
-  if(idx===-1)return;
-  // migrate attendance data if id changed
+  if(!newId||!newName){err.textContent='กรุณากรอกรหัสและชื่อ';err.style.display='block';return;}
+  if(newId!==editTargetId&&students.find(s=>s.id===newId)){err.textContent='รหัสนี้มีอยู่แล้ว';err.style.display='block';return;}
+  const idx=students.findIndex(s=>s.id===editTargetId);if(idx===-1)return;
   if(newId!==editTargetId){
     Object.keys(attendance).forEach(d=>{
-      if(attendance[d][editTargetId]!==undefined){
-        attendance[d][newId]=attendance[d][editTargetId];
-        delete attendance[d][editTargetId];
-      }
+      if(attendance[d][editTargetId]!==undefined){attendance[d][newId]=attendance[d][editTargetId];delete attendance[d][editTargetId];}
     });
   }
-  students[idx]={id:newId,name:newName,type:newType};
+  students[idx]={id:newId,name:newName,type:newType,year:newYear};
   save();closeEdit();render();
 }
 
+document.getElementById('addModal').addEventListener('click',e=>{if(e.target===document.getElementById('addModal'))closeAdd();});
+document.getElementById('editModal').addEventListener('click',e=>{if(e.target===document.getElementById('editModal'))closeEdit();});
+
 function exportPDF(){
   const list=filtered();
-  const tabLabel={'all':'ทั้งหมด','transfer':'เทียบโอน','four':'4 ปี'}[tab];
+  const tabLabel={'all':'ทั้งหมด','y1-all':'ปี 1 ทั้งหมด','y1-four':'ปี 1 (4 ปี)','y1-transfer':'ปี 1 เทียบโอน','y2-all':'ปี 2 ทั้งหมด','y2-four':'ปี 2 (4 ปี)','y2-transfer':'ปี 2 เทียบโอน'}[tab]||'ทั้งหมด';
   let present=0,absent=0;
   list.forEach(s=>{const a=getAtt(s.id);if(a.status===true)present++;else if(a.status===false)absent++;});
-
   const rows=list.map((s,i)=>{
     const att=getAtt(s.id);
     const st=att.status;
-    const statusTxt=st===true?'มา':st===false?'ไม่มา':'—';
-    const statusColor=st===true?'#1D6B3A':st===false?'#9B2626':'#888';
+    const stTxt=st===true?'มา':st===false?'ไม่มา':'—';
+    const stColor=st===true?'#1D6B3A':st===false?'#9B2626':'#888';
     const reason=st===false?[att.reason&&att.reason!=='— ระบุเหตุผล —'?att.reason:'',att.reasonText||''].filter(Boolean).join(' / ')||'—':'—';
     const typeLabel=s.type==='transfer'?'เทียบโอน':'4 ปี';
-    return `<tr style="border-bottom:1px solid #eee">
-      <td style="padding:6px 10px;color:#888;font-size:12px">${i+1}</td>
-      <td style="padding:6px 10px;font-size:11px;font-family:monospace;color:#555">${s.id}</td>
-      <td style="padding:6px 10px;font-size:13px">${s.name}</td>
-      <td style="padding:6px 10px;font-size:11px;color:#666">${typeLabel}</td>
-      <td style="padding:6px 10px;font-size:13px;font-weight:600;color:${statusColor}">${statusTxt}</td>
-      <td style="padding:6px 10px;font-size:12px;color:#555">${reason}</td>
-    </tr>`;
+    const yearLabel=s.year==='y2'?'ปี 2':'ปี 1';
+    return `<tr style="border-bottom:1px solid #eee"><td style="padding:5px 8px;color:#888;font-size:12px">${i+1}</td><td style="padding:5px 8px;font-size:11px;font-family:monospace;color:#555">${s.id}</td><td style="padding:5px 8px;font-size:13px">${s.name}</td><td style="padding:5px 8px;font-size:11px;color:#666">${yearLabel} ${typeLabel}</td><td style="padding:5px 8px;font-size:13px;font-weight:600;color:${stColor}">${stTxt}</td><td style="padding:5px 8px;font-size:12px;color:#555">${reason}</td></tr>`;
   }).join('');
-
-  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8">
-<title>เช็คชื่อ ${currentDate}</title>
-<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-body{font-family:'Sarabun',sans-serif;margin:24px;font-size:14px;color:#111}
-h2{font-size:18px;font-weight:700;margin:0 0 4px}
-.sub{font-size:13px;color:#666;margin:0 0 16px}
-.stats{display:flex;gap:12px;margin:0 0 16px}
-.sb{border:1px solid #ddd;border-radius:8px;padding:10px 18px;text-align:center}
-.sn{font-size:22px;font-weight:700}.sl{font-size:11px;color:#888;margin-top:2px}
-.green{color:#1D6B3A}.red{color:#9B2626}
-table{width:100%;border-collapse:collapse}
-th{padding:8px 10px;text-align:left;border-bottom:2px solid #222;font-size:11px;color:#555;text-transform:uppercase;letter-spacing:.06em}
-td{font-size:13px}
-tr:nth-child(even){background:#f9f9f9}
-.footer{margin-top:20px;font-size:11px;color:#aaa;border-top:1px solid #eee;padding-top:10px}
-@media print{body{margin:12px}button{display:none}}
-</style></head><body>
-<h2>รายชื่อเช็คชื่อนักศึกษา — ${tabLabel}</h2>
-<p class="sub">มหาวิทยาลัยราชภัฎอุดรธานี · วิศวกรรมศาสตรบัณฑิต · วันที่ ${currentDate}</p>
-<div class="stats">
-  <div class="sb"><div class="sn">${list.length}</div><div class="sl">ทั้งหมด</div></div>
-  <div class="sb"><div class="sn green">${present}</div><div class="sl">มา</div></div>
-  <div class="sb"><div class="sn red">${absent}</div><div class="sl">ไม่มา</div></div>
-  <div class="sb"><div class="sn">${list.length-present-absent}</div><div class="sl">ยังไม่เช็ค</div></div>
-</div>
-<table>
-  <thead><tr><th>#</th><th>รหัส</th><th>ชื่อ-นามสกุล</th><th>ประเภท</th><th>สถานะ</th><th>เหตุผลที่ไม่มา</th></tr></thead>
-  <tbody>${rows}</tbody>
-</table>
-<div class="footer">พิมพ์โดยระบบเช็คชื่อ RUDI Engineering · ${new Date().toLocaleString('th-TH')}</div>
-<script>window.onload=()=>{window.print()}<\/script>
-</body></html>`;
-
+  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>เช็คชื่อ ${currentDate}</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet">
+<style>body{font-family:'Sarabun',sans-serif;margin:20px;font-size:14px}h2{font-size:17px;font-weight:700;margin:0 0 3px}.sub{font-size:12px;color:#666;margin:0 0 14px}.stats{display:flex;gap:10px;margin:0 0 14px}.sb{border:1px solid #ddd;border-radius:6px;padding:8px 14px;text-align:center}.sn{font-size:20px;font-weight:700}.sl{font-size:10px;color:#888;margin-top:2px}.green{color:#1D6B3A}.red{color:#9B2626}table{width:100%;border-collapse:collapse}th{padding:7px 8px;text-align:left;border-bottom:2px solid #222;font-size:11px;color:#555;text-transform:uppercase}td{font-size:13px}tr:nth-child(even){background:#f9f9f9}.footer{margin-top:14px;font-size:10px;color:#aaa;border-top:1px solid #eee;padding-top:8px}@media print{body{margin:10px}}</style>
+</head><body>
+<h2>รายชื่อเช็คชื่อ — ${tabLabel}</h2>
+<p class="sub">มหาวิทยาลัยราชภัฎอุดรธานี · วิศวกรรมศาสตรบัณฑิต · ${currentDate}</p>
+<div class="stats"><div class="sb"><div class="sn">${list.length}</div><div class="sl">ทั้งหมด</div></div><div class="sb"><div class="sn green">${present}</div><div class="sl">มา</div></div><div class="sb"><div class="sn red">${absent}</div><div class="sl">ไม่มา</div></div><div class="sb"><div class="sn">${list.length-present-absent}</div><div class="sl">ยังไม่เช็ค</div></div></div>
+<table><thead><tr><th>#</th><th>รหัส</th><th>ชื่อ-นามสกุล</th><th>ประเภท</th><th>สถานะ</th><th>เหตุผล</th></tr></thead><tbody>${rows}</tbody></table>
+<div class="footer">ออกโดยระบบเช็คชื่อ RUDI · ${new Date().toLocaleString('th-TH')}</div>
+<script>window.onload=()=>{window.print()}<\/script></body></html>`;
   const w=window.open('','_blank');
-  if(w){w.document.write(html);w.document.close();}
-  else alert('กรุณาอนุญาต popup เพื่อ Export PDF');
+  if(w){w.document.write(html);w.document.close();}else alert('กรุณาอนุญาต popup');
 }
-
-// Click outside modal
-document.getElementById('addModal').addEventListener('click',function(e){if(e.target===this)closeAdd();});
-document.getElementById('editModal').addEventListener('click',function(e){if(e.target===this)closeEdit();});
 
 // Init
 load();
 if(!dates.length){dates=[todayStr()];}
 currentDate=dates[dates.length-1];
-// pre-fill date picker with today
 const _td=new Date();
 const _dp=document.getElementById('datePicker');
 if(_dp)_dp.value=_td.toISOString().split('T')[0];
