@@ -37,6 +37,17 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 .tab-btn:hover{background:rgba(255,255,255,.08);color:#fff}
 .tab-btn.active{background:rgba(255,255,255,.15);color:#fff;font-weight:500}
 .tab-pill{font-size:11px;font-family:var(--mono);background:rgba(255,255,255,.15);padding:2px 7px;border-radius:10px;flex-shrink:0}
+.acc-group{border-radius:8px;overflow:hidden;margin-bottom:3px}
+.acc-header{display:flex;align-items:center;justify-content:space-between;width:100%;padding:9px 10px;border-radius:8px;border:none;background:rgba(255,255,255,.06);color:rgba(255,255,255,.8);font-family:var(--sans);font-size:13px;cursor:pointer;text-align:left;transition:all .15s;font-weight:500}
+.acc-header:hover{background:rgba(255,255,255,.12);color:#fff}
+.acc-header.acc-open{background:rgba(255,255,255,.13);color:#fff;border-radius:8px 8px 0 0}
+.acc-label{display:flex;align-items:center;gap:6px}
+.acc-year{font-size:11px;color:rgba(255,255,255,.4);font-family:var(--mono);font-weight:400}
+.acc-right{display:flex;align-items:center;gap:8px}
+.acc-arrow{font-size:10px;color:rgba(255,255,255,.4);transition:transform .2s;display:inline-block}
+.acc-arrow.open{transform:rotate(90deg);color:rgba(255,255,255,.7)}
+.acc-body{background:rgba(0,0,0,.12);border-radius:0 0 8px 8px;padding:4px 0 4px 0}
+.sub-tab{padding-left:22px!important;font-size:12px!important}
 .date-section{padding:10px 12px;border-top:1px solid rgba(255,255,255,.1);margin-top:auto}
 .date-label{font-size:10px;font-family:var(--mono);letter-spacing:.1em;color:rgba(255,255,255,.35);text-transform:uppercase;margin-bottom:6px}
 .date-list{display:flex;flex-direction:column;gap:3px;max-height:150px;overflow-y:auto;margin-bottom:8px}
@@ -242,25 +253,36 @@ td{padding:8px 12px;vertical-align:middle}
 <!-- Sidebar -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-header">
-    <div class="sidebar-logo">UDRU · Engineering</div>
+    <div class="sidebar-logo">RUDI · Engineering</div>
     <div class="sidebar-title">ระบบเช็คชื่อ<br>นักศึกษา</div>
-    <div class="sidebar-sub">ปีการศึกษา 2568 และ 2569</div>
+    <div class="sidebar-sub">ปีการศึกษา 2568–2569</div>
   </div>
   <div class="sidebar-section">
-    <div class="sidebar-label">กลุ่มนักศึกษา</div>
     <button class="tab-btn active" onclick="setTab('all')" id="tab-all">ทั้งหมด <span class="tab-pill" id="pill-all">0</span></button>
-  </div>
-  <div class="sidebar-section">
-    <div class="sidebar-label">ปี 2 (2568)</div>
-    <button class="tab-btn" onclick="setTab('y2-all')" id="tab-y2-all">ทั้งหมดปี 2 <span class="tab-pill" id="pill-y2-all">0</span></button>
-    <button class="tab-btn" onclick="setTab('y2-four')" id="tab-y2-four">4 ปี <span class="tab-pill" id="pill-y2-four">0</span></button>
-    <button class="tab-btn" onclick="setTab('y2-transfer')" id="tab-y2-transfer">เทียบโอน <span class="tab-pill" id="pill-y2-transfer">0</span></button>
-  </div>
-  <div class="sidebar-section">
-    <div class="sidebar-label">ปี 1 (2569)</div>
-    <button class="tab-btn" onclick="setTab('y1-all')" id="tab-y1-all">ทั้งหมดปี 1 <span class="tab-pill" id="pill-y1-all">0</span></button>
-    <button class="tab-btn" onclick="setTab('y1-four')" id="tab-y1-four">4 ปี <span class="tab-pill" id="pill-y1-four">0</span></button>
-    <button class="tab-btn" onclick="setTab('y1-transfer')" id="tab-y1-transfer">เทียบโอน <span class="tab-pill" id="pill-y1-transfer">0</span></button>
+    <!-- Year 2 accordion -->
+    <div class="acc-group" id="acc-y2">
+      <button class="acc-header" onclick="toggleAcc('y2')">
+        <span class="acc-label">ปี 2 <span class="acc-year">(2568)</span></span>
+        <span class="acc-right"><span class="tab-pill" id="pill-y2-all">0</span><span class="acc-arrow" id="arr-y2">▸</span></span>
+      </button>
+      <div class="acc-body" id="body-y2" style="display:none">
+        <button class="tab-btn sub-tab" onclick="setTab('y2-all')" id="tab-y2-all">ทั้งหมด <span class="tab-pill" id="pill-y2-all-sub">0</span></button>
+        <button class="tab-btn sub-tab" onclick="setTab('y2-four')" id="tab-y2-four">4 ปี <span class="tab-pill" id="pill-y2-four">0</span></button>
+        <button class="tab-btn sub-tab" onclick="setTab('y2-transfer')" id="tab-y2-transfer">เทียบโอน <span class="tab-pill" id="pill-y2-transfer">0</span></button>
+      </div>
+    </div>
+    <!-- Year 1 accordion -->
+    <div class="acc-group" id="acc-y1">
+      <button class="acc-header" onclick="toggleAcc('y1')">
+        <span class="acc-label">ปี 1 <span class="acc-year">(2569)</span></span>
+        <span class="acc-right"><span class="tab-pill" id="pill-y1-all">0</span><span class="acc-arrow" id="arr-y1">▸</span></span>
+      </button>
+      <div class="acc-body" id="body-y1" style="display:none">
+        <button class="tab-btn sub-tab" onclick="setTab('y1-all')" id="tab-y1-all">ทั้งหมด <span class="tab-pill" id="pill-y1-all-sub">0</span></button>
+        <button class="tab-btn sub-tab" onclick="setTab('y1-four')" id="tab-y1-four">4 ปี <span class="tab-pill" id="pill-y1-four">0</span></button>
+        <button class="tab-btn sub-tab" onclick="setTab('y1-transfer')" id="tab-y1-transfer">เทียบโอน <span class="tab-pill" id="pill-y1-transfer">0</span></button>
+      </div>
+    </div>
   </div>
   <div class="date-section">
     <div class="date-label">วันที่เช็คชื่อ</div>
@@ -275,7 +297,8 @@ td{padding:8px 12px;vertical-align:middle}
     </div>
   </div>
   <div class="date-actions">
-    <button class="sidebar-btn" onclick="exportPDF()">⬇ Export PDF</button>
+    <button class="sidebar-btn" onclick="exportPDF()">⬇ Export HTML</button>
+    <button class="sidebar-btn" onclick="exportIMG()" style="background:var(--accent);color:#fff;margin-top:6px">📷 บันทึกรูปภาพ</button>
   </div>
 </aside>
 
@@ -288,7 +311,7 @@ td{padding:8px 12px;vertical-align:middle}
       <div class="topbar-title" id="topbarTitle">เช็คชื่อนักศึกษา</div>
       <div class="topbar-sub" id="topbarSub">ราชภัฎอุดรธานี</div>
     </div>
-    <button class="hbtn primary" onclick="exportPDF()" style="font-size:11px;padding:6px 10px">⬇ PDF</button>
+    <button class="hbtn primary" onclick="exportIMG()" style="font-size:11px;padding:6px 10px">📷 บันทึก</button>
   </div>
 
   <div class="main-header">
@@ -298,7 +321,8 @@ td{padding:8px 12px;vertical-align:middle}
     </div>
     <div class="header-actions">
       <button class="hbtn" onclick="openAdd()">+ เพิ่มรายชื่อ</button>
-      <button class="hbtn primary" onclick="exportPDF()">⬇ Export PDF</button>
+      <button class="hbtn" onclick="exportPDF()">⬇ HTML</button>
+      <button class="hbtn primary" onclick="exportIMG()">📷 บันทึกรูป</button>
     </div>
   </div>
 
@@ -439,7 +463,6 @@ let students = [
   {id:"68001308104",name:"นายศิริวุฒิ บุตรดามา",type:"transfer",year:"y2"},
   {id:"68001308105",name:"นายปฐมพร ใจชื่น",type:"transfer",year:"y2"},
   {id:"68001308106",name:"นายวินัย นาฬิกุล",type:"transfer",year:"y2"},
-  {id:"68001308107",name:"นายเอกภพ สาลีพันธ์",type:"transfer",year:"y2"},
   {id:"68001308108",name:"นายสิทธิโชค แสงมณี",type:"transfer",year:"y2"},
   {id:"68001308109",name:"นายธนโชติ ปัชชมูลตรี",type:"transfer",year:"y2"},
   {id:"68001308110",name:"นางสาวอัญชิสา ก้านขวา",type:"transfer",year:"y2"},
@@ -465,7 +488,6 @@ let students = [
   {id:"68041308102",name:"นายอนันตา บุตรดา",type:"four",year:"y2"},
   {id:"68041308103",name:"นายภัคภูมิ รัติภัย",type:"four",year:"y2"},
   {id:"68041308104",name:"นายสิทธิปติ ตันติวานนท์",type:"four",year:"y2"},
-  {id:"68041308105",name:"นายกฤษณะ วรรณวงค์",type:"four",year:"y2"},
   {id:"68041308106",name:"นายภัทราวุธ ศรีเมือง",type:"four",year:"y2"},
   {id:"68041308107",name:"นายศิราวุฒธิ์ ไชยยศ",type:"four",year:"y2"},
   {id:"68041308108",name:"MISS MINTA BOUTTACHAN",type:"four",year:"y2"},
@@ -477,7 +499,6 @@ let students = [
   {id:"68041308114",name:"นายธีรวัฒน์ คำภูแก้ว",type:"four",year:"y2"},
   {id:"68041308115",name:"นายนครินทร์ ลายละเอียด",type:"four",year:"y2"},
   {id:"68041308116",name:"นายนภัสกร เจิมทอง",type:"four",year:"y2"},
-  {id:"68041308117",name:"นายเอกภพ สาลีพันธ์",type:"four",year:"y2"},
   {id:"68041308118",name:"นางสาววนิดา ประกอบวงษ์",type:"four",year:"y2"},
   {id:"68041308119",name:"นายภวินท์ ศรีสามารถ",type:"four",year:"y2"},
   {id:"68041308121",name:"นางสาวมินเช คัง",type:"four",year:"y2"},
@@ -487,12 +508,15 @@ let students = [
   {id:"68041308125",name:"นางสาวปัฐมาภรณ์ บุญเพิ่ม",type:"four",year:"y2"},
   {id:"68041308126",name:"นายกิตติวินทร์ เดชป้องหา",type:"four",year:"y2"},
   {id:"68041308127",name:"นางสาวรสริน ทุมชะ",type:"four",year:"y2"},
-  {id:"68041308128",name:"นายศราวุธ นาคนาคา",type:"four",year:"y2"},
   {id:"68041308129",name:"นางสาวสาริกา วิชากุล",type:"four",year:"y2"},
   {id:"68041308130",name:"นางสาวกิตติวรา กองเข็ม",type:"four",year:"y2"},
   {id:"68041308131",name:"นายกฤษฎา พันชา",type:"four",year:"y2"},
+  {id:"68041308201",name:"นางสาวเพชรรัตน์ หม่อมศักดิ์",type:"four",year:"y2"},
   {id:"68041308202",name:"นายธิรักษ์ พิมพ์ภาเรีย",type:"four",year:"y2"},
   {id:"68041308203",name:"นางสาวหทัยชนก อ่อนภูเขา",type:"four",year:"y2"},
+  {id:"68041308204",name:"นายพิพัฒน์พล ธรรมขันธ์",type:"four",year:"y2"},
+  {id:"68041308206",name:"นายเหมราช สว่างสุข",type:"four",year:"y2"},
+  {id:"68041308207",name:"นางสาวศวรรยา สงคราม",type:"four",year:"y2"},
   {id:"68041308209",name:"นางสาวปวีณา พิมพ์ปัดชา",type:"four",year:"y2"},
   {id:"68041308210",name:"นายวุฒิชัย แก้วไพฑูรย์",type:"four",year:"y2"},
   {id:"68041308211",name:"นางสาวขนิษฐา บุญกัณฑ์",type:"four",year:"y2"},
@@ -582,12 +606,34 @@ function filtered(){
   return list;
 }
 
+function toggleAcc(year){
+  const body=document.getElementById('body-'+year);
+  const arrow=document.getElementById('arr-'+year);
+  const header=document.querySelector('#acc-'+year+' .acc-header');
+  const isOpen=body.style.display!=='none';
+  body.style.display=isOpen?'none':'block';
+  arrow.classList.toggle('open',!isOpen);
+  header.classList.toggle('acc-open',!isOpen);
+}
+
 function setTab(t){
   tab=t;
   document.querySelectorAll('.tab-btn').forEach(el=>{
     const id=el.id.replace('tab-','');
     el.classList.toggle('active',id===t);
   });
+  // Auto-expand the right accordion
+  if(t.startsWith('y2')){
+    const body=document.getElementById('body-y2');
+    const arrow=document.getElementById('arr-y2');
+    const header=document.querySelector('#acc-y2 .acc-header');
+    if(body&&body.style.display==='none'){body.style.display='block';arrow&&arrow.classList.add('open');header&&header.classList.add('acc-open');}
+  } else if(t.startsWith('y1')){
+    const body=document.getElementById('body-y1');
+    const arrow=document.getElementById('arr-y1');
+    const header=document.querySelector('#acc-y1 .acc-header');
+    if(body&&body.style.display==='none'){body.style.display='block';arrow&&arrow.classList.add('open');header&&header.classList.add('acc-open');}
+  }
   closeSidebar();
   render();
 }
@@ -625,9 +671,19 @@ function render(){
   // pills
   document.getElementById('pill-all').textContent=students.length;
   ['y1','y2'].forEach(y=>{
-    document.getElementById('pill-'+y+'-all').textContent=students.filter(s=>s.year===y).length;
-    document.getElementById('pill-'+y+'-transfer').textContent=students.filter(s=>s.year===y&&s.type==='transfer').length;
-    document.getElementById('pill-'+y+'-four').textContent=students.filter(s=>s.year===y&&s.type==='four').length;
+    const total=students.filter(s=>s.year===y).length;
+    const transfer=students.filter(s=>s.year===y&&s.type==='transfer').length;
+    const four=students.filter(s=>s.year===y&&s.type==='four').length;
+    // header pill
+    const hPill=document.getElementById('pill-'+y+'-all');
+    if(hPill)hPill.textContent=total;
+    // sub pill
+    const sPill=document.getElementById('pill-'+y+'-all-sub');
+    if(sPill)sPill.textContent=total;
+    const tPill=document.getElementById('pill-'+y+'-transfer');
+    if(tPill)tPill.textContent=transfer;
+    const fPill=document.getElementById('pill-'+y+'-four');
+    if(fPill)fPill.textContent=four;
   });
   // stats
   let present=0,absent=0,checked=0;
@@ -805,19 +861,105 @@ function exportPDF(){
 <table><thead><tr><th>#</th><th>รหัส</th><th>ชื่อ-นามสกุล</th><th>ประเภท</th><th>สถานะ</th><th>เหตุผล</th></tr></thead><tbody>${rows}</tbody></table>
 <div class="footer">ออกโดยระบบเช็คชื่อ RUDI · ${new Date().toLocaleString('th-TH')}</div>
 </body></html>`;
-  // ดาวน์โหลดเลยโดยไม่เปิดหน้า print
-  const dateSlug=currentDate.replace(/\//g,'-');
-  const filename=`เช็คชื่อ_${dateSlug}_${tabLabel}.html`;
-  const blob=new Blob([html],{type:'text/html;charset=utf-8'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;a.download=filename;
-  document.body.appendChild(a);a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+  // เปิด tab ใหม่แล้ว write HTML เข้าไปตรงๆ — ใช้ได้ทุก browser รวม iOS Safari
+  const w=window.open('','_blank');
+  if(w){
+    w.document.open();
+    w.document.write(html);
+    w.document.close();
+  } else {
+    alert('กรุณาอนุญาตให้เปิด Popup แล้วลองใหม่ครับ');
+  }
 }
 
-// Init
+function exportIMG(){
+  const list=filtered();
+  const tabLabelTH={'all':'ทั้งหมด','y1-all':'ปี 1 ทั้งหมด','y1-four':'ปี 1 (4 ปี)','y1-transfer':'ปี 1 เทียบโอน','y2-all':'ปี 2 ทั้งหมด','y2-four':'ปี 2 (4 ปี)','y2-transfer':'ปี 2 เทียบโอน'}[tab]||'ทั้งหมด';
+  const tabLabel={'all':'ทั้งหมด','y1-all':'ปี1-ทั้งหมด','y1-four':'ปี1-4ปี','y1-transfer':'ปี1-เทียบโอน','y2-all':'ปี2-ทั้งหมด','y2-four':'ปี2-4ปี','y2-transfer':'ปี2-เทียบโอน'}[tab]||'ทั้งหมด';
+  let present=0,absent=0;
+  list.forEach(s=>{const a=getAtt(s.id);if(a.status===true)present++;else if(a.status===false)absent++;});
+
+  // สร้าง div สำหรับ render รูป
+  const wrap=document.createElement('div');
+  wrap.style.cssText='position:fixed;left:-9999px;top:0;background:#fff;padding:24px;width:700px;font-family:Sarabun,sans-serif;font-size:14px;';
+  wrap.innerHTML=`
+    <div style="margin-bottom:12px">
+      <div style="font-size:18px;font-weight:700;color:#1A3A2A">รายชื่อเช็คชื่อ — ${tabLabelTH}</div>
+      <div style="font-size:12px;color:#666;margin-top:2px">มหาวิทยาลัยราชภัฎอุดรธานี · วิศวกรรมศาสตรบัณฑิต · ${currentDate}</div>
+    </div>
+    <div style="display:flex;gap:12px;margin-bottom:14px">
+      <div style="border:1px solid #ddd;border-radius:8px;padding:8px 16px;text-align:center"><div style="font-size:22px;font-weight:700">${list.length}</div><div style="font-size:10px;color:#888">ทั้งหมด</div></div>
+      <div style="border:1px solid #ddd;border-radius:8px;padding:8px 16px;text-align:center"><div style="font-size:22px;font-weight:700;color:#1D6B3A">${present}</div><div style="font-size:10px;color:#888">มา</div></div>
+      <div style="border:1px solid #ddd;border-radius:8px;padding:8px 16px;text-align:center"><div style="font-size:22px;font-weight:700;color:#9B2626">${absent}</div><div style="font-size:10px;color:#888">ไม่มา</div></div>
+      <div style="border:1px solid #ddd;border-radius:8px;padding:8px 16px;text-align:center"><div style="font-size:22px;font-weight:700;color:#888">${list.length-present-absent}</div><div style="font-size:10px;color:#888">ยังไม่เช็ค</div></div>
+    </div>
+    <table style="width:100%;border-collapse:collapse">
+      <thead><tr style="background:#1A3A2A;color:#fff">
+        <th style="padding:7px 8px;text-align:left;font-size:11px">#</th>
+        <th style="padding:7px 8px;text-align:left;font-size:11px">รหัส</th>
+        <th style="padding:7px 8px;text-align:left;font-size:11px">ชื่อ-นามสกุล</th>
+        <th style="padding:7px 8px;text-align:left;font-size:11px">ประเภท</th>
+        <th style="padding:7px 8px;text-align:left;font-size:11px">สถานะ</th>
+        <th style="padding:7px 8px;text-align:left;font-size:11px">เหตุผล</th>
+      </tr></thead>
+      <tbody>${list.map((s,i)=>{
+        const att=getAtt(s.id);const st=att.status;
+        const stTxt=st===true?'มา':st===false?'ไม่มา':'—';
+        const stColor=st===true?'#1D6B3A':st===false?'#9B2626':'#888';
+        const reason=st===false?[att.reason&&att.reason!=='— ระบุเหตุผล —'?att.reason:'',att.reasonText||''].filter(Boolean).join(' / ')||'—':'—';
+        const bg=i%2===0?'#fff':'#f5f9f7';
+        return `<tr style="background:${bg};border-bottom:1px solid #eee">
+          <td style="padding:5px 8px;color:#888;font-size:12px">${i+1}</td>
+          <td style="padding:5px 8px;font-size:11px;font-family:monospace;color:#555">${s.id}</td>
+          <td style="padding:5px 8px;font-size:13px">${s.name}</td>
+          <td style="padding:5px 8px;font-size:11px;color:#666">${s.year==='y2'?'ปี 2':'ปี 1'} ${s.type==='transfer'?'เทียบโอน':'4 ปี'}</td>
+          <td style="padding:5px 8px;font-size:13px;font-weight:700;color:${stColor}">${stTxt}</td>
+          <td style="padding:5px 8px;font-size:11px;color:#555">${reason}</td>
+        </tr>`;
+      }).join('')}</tbody>
+    </table>
+    <div style="margin-top:12px;font-size:10px;color:#aaa;border-top:1px solid #eee;padding-top:8px">ออกโดยระบบเช็คชื่อ RUDI · ${new Date().toLocaleString('th-TH')}</div>
+  `;
+  document.body.appendChild(wrap);
+
+  // โหลด html2canvas แล้ว render
+  if(!window.html2canvas){
+    const s=document.createElement('script');
+    s.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+    s.onload=()=>_doCapture(wrap,tabLabel);
+    document.head.appendChild(s);
+  } else {
+    _doCapture(wrap,tabLabel);
+  }
+}
+
+function _doCapture(wrap,tabLabel){
+  html2canvas(wrap,{scale:2,useCORS:true,backgroundColor:'#ffffff'}).then(canvas=>{
+    document.body.removeChild(wrap);
+    const dateSlug=currentDate.replace(/\//g,'-');
+    const filename=`เช็คชื่อ_${dateSlug}_${tabLabel}.png`;
+    // iOS: เปิดรูปใน tab ใหม่ให้กด Hold > Save
+    // Android/Desktop: ดาวน์โหลดตรง
+    const img=canvas.toDataURL('image/png');
+    const a=document.createElement('a');
+    a.href=img;a.download=filename;
+    if(/iPhone|iPad|iPod/i.test(navigator.userAgent)){
+      // iOS — เปิดรูปใน tab ใหม่
+      const w=window.open('','_blank');
+      if(w){
+        w.document.write(`<html><head><meta name="viewport" content="width=device-width"><title>${filename}</title></head><body style="margin:0;background:#111;display:flex;justify-content:center;align-items:flex-start;min-height:100vh"><img src="${img}" style="max-width:100%;height:auto"></body></html>`);
+        w.document.close();
+      }
+    } else {
+      document.body.appendChild(a);a.click();document.body.removeChild(a);
+    }
+  }).catch(()=>{
+    document.body.removeChild(wrap);
+    alert('เกิดข้อผิดพลาด ลองใหม่อีกครั้งครับ');
+  });
+}
+
+
 load();
 if(!dates.length){dates=[todayStr()];}
 currentDate=dates[dates.length-1];
